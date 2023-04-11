@@ -33,12 +33,14 @@ function Login() {
         datas,
       },
     }).then((res) => {
-      console.log(res.data.token, "this is the token data");
+      console.log(res.data, "this is the token data");
       dispatch(
         setLogin({
           token: res.data.token,
           email: res.data.email,
           name: res.data.name,
+          userType:res.data.userType,
+          userId : res.data.userId
         })
       );
       navigate("/");
@@ -100,7 +102,6 @@ function Login() {
       });
   };
 
-
   const backendCaller = async (event) => {
     console.log(number, "this is the number of the user");
 
@@ -113,11 +114,12 @@ function Login() {
     }).then((response) => {
       console.log(response);
       navigate("/");
-      console.log("verify number then worked", response.data);
       dispatch(
         setLogin({
           token: response.data.token,
           number: number,
+          userType:response.data.userType,
+          userId :response.data.userId
         })
       );
     });
@@ -199,7 +201,8 @@ function Login() {
           <div className="absolute px-5 bg-white">Or</div>
         </div>
         <div className="flex justify-center mt-11  ">
-          <LoginSocialGoogle
+          <LoginSocialGoogle 
+            className="text-white"
             client_id={clientId}
             scope="openid profile email"
             discoveryDocs="claims_supported"

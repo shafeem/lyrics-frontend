@@ -2,8 +2,8 @@ import { useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 
 import { Searchbar, Sidebar, MusicPlayer, TopPlay } from '../components';
-import { ArtistDetails, TopArtists, AroundYou, Discover, Search, SongDetails, TopCharts, } from '../pages';
-import Logout from '../components/Logout';
+import { ArtistDetails, TopArtists, AroundYou, Discover,  SongDetails, TopCharts, } from '../pages';
+import Logout from '../components/Logout'; 
 
 const User = () => {
   const { activeSong } = useSelector((state) => state.player);
@@ -24,7 +24,6 @@ const User = () => {
               <Route path="/artists/:id" element={<ArtistDetails />} />
               <Route path="/songs/:songid" element={<SongDetails />} />
               <Route path='/logout' element={<Logout/>} />
-              <Route path="/search/:term" element={<Search />} />
             </Routes>
           </div>
           <div className="xl:sticky relative top-0 h-fit">

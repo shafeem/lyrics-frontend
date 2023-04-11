@@ -3,16 +3,25 @@ import { useNavigate } from "react-router-dom";
 import { FiSearch } from "react-icons/fi";
 import { RiNotification2Fill } from "react-icons/ri";
 import Notification from "./Notification";
-
+import { IoSettingsSharp } from "react-icons/io5";
+import Setting from "./Setting";
+import { useSelector } from "react-redux";
 
 const Searchbar = () => {
   const navigate = useNavigate();
 
+  const {token} =useSelector((state)=>state.userSlice);
+
   const [search, setSearch] = useState();
   const [isOpen, setIsOpen] = useState(false);
+  const [isSetting, isSettingOpen] = useState(false);
 
   const handleClick = () => {
     setIsOpen(!isOpen);
+  };
+
+  const settingHandler = () => {
+    isSettingOpen(!isSetting);
   };
 
   const Message = "New Feature Available Now.You Can Upload Your Own Songs";
@@ -25,7 +34,7 @@ const Searchbar = () => {
 
   return (
     <div className="flex w-full px-4">
-      <div className="w-10/12">
+      <div className="w-full">
         <form
           onSubmit={handleSubmit}
           autoComplete="off"
@@ -51,19 +60,38 @@ const Searchbar = () => {
           </div>
         </form>
       </div>
-      <div className="flex-none ml-4 sm:pr-10 sm:pt-6 pt-3">
-        <div className="">
+      <div className="flex-none mr-10 pt-6">
+        {token && (
           <RiNotification2Fill
-            className="w-6 h-6 text-white/90"
-            onClick={handleClick}
-          />
-        </div>
+          className="w-5 h-5 text-white/90 hover:cursor-pointer"
+          onClick={handleClick}
+        />
+        )}
+      </div>
+      <div className="flex-none mr-10 pt-6">
+        {token && (
+          <IoSettingsSharp
+          className="w-5 h-5 text-white hover:cursor-pointer"
+          onClick={settingHandler}
+        />
+        )}
       </div>
 
-      {isOpen && (
-        
-          <Notification handleClick={handleClick} children={Message} isOpen={isOpen}/>
-        
+      {token && isOpen && (
+        <Notification
+          name={'Notifications'}
+          handleClick={handleClick}
+          children={Message}
+          isOpen={isOpen}
+        />
+      )}
+      {token && isSetting && (
+        <Notification
+          name={'Settings'}
+          handleClick={settingHandler}
+          children={<Setting />}
+          isOpen={isSetting}
+        />
       )}
     </div>
   );

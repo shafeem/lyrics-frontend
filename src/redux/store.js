@@ -3,6 +3,7 @@ import { shazamApi } from "./services/shazam";
 import {userSlice} from './features/userSlice'
 import playerReducer from "./features/playerSlice";
 import storage from "redux-persist/lib/storage";
+import { adminSlice } from "./features/adminSlice";
 import {
   persistReducer,
   persistStore,
@@ -21,12 +22,14 @@ const persistConfig = {
 };
 
 const UserPersistReducer = persistReducer(persistConfig,userSlice.reducer)
+const AdminPersistReducer = persistReducer(persistConfig,adminSlice.reducer)
 
 export const store = configureStore({
   reducer: {
     [shazamApi.reducerPath]: shazamApi.reducer,
     player: playerReducer,
     userSlice:UserPersistReducer,
+    adminSlice:AdminPersistReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

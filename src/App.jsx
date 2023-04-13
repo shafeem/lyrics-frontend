@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import User from "./routes/User";
 import Admin from "./routes/Admin";
 import Login from "./pages/Login.";
+import AdminLogin from "./pages/admin/AdminLogin";
 // import firebase from './firebase/firebase'
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
           <Route path="/*" element={<User />} />
           <Route path="/login" element={<Login />} />
           <Route path="/admin/*" element={<Admin />} />
+          <Route path="/admin/" element={<AdminLogin />} />
         </Routes>
       </BrowserRouter>
     </>

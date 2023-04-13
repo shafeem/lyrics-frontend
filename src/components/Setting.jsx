@@ -1,22 +1,24 @@
 import React, { useState, useEffect } from "react";
 import Switch from "@mui/material/Switch";
 import Notification from "./Notification";
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "../axios/userInstance";
-import {setLogin} from '../redux/features/userSlice'
+import { setLogin } from "../redux/features/userSlice";
 // import { response } from "express";
 
 function Setting() {
-  const { userType, userId } = useSelector((state) => state.userSlice);
+  const { userType, userId, profile } = useSelector((state) => state.userSlice);
   const state = useSelector((state) => state.userSlice);
 
   const dispatch = useDispatch();
 
-  const [artist, setArtist] = useState(userType === "artist");
+  const [artist, setArtist] = useState(
+    userType === "artist" || userType === "pending"
+  );
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    setArtist(userType === "artist");
+    setArtist(userType === "artist" || userType === "pending");
   }, [userType]);
 
   const userChanger = () => {
@@ -33,17 +35,16 @@ function Setting() {
         id: userId,
       },
     }).then((response) => {
-      console.log(response,'this is the response');
+      console.log(response.data.userType, "this is the response");
 
       dispatch(
         setLogin({
           ...state,
-        userType:response.data.userType
-      })
+          userType: response.data.userType,
+        })
       );
-    setOpen(false);
+      setOpen(false);
     });
-
   };
   return (
     <>
@@ -70,20 +71,26 @@ function Setting() {
       <div className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
           <h3 className="font-bold text-lg">Congratulations</h3>
-          <p className=" pt-7">
-            After the admin confirmation you can upload your own song to the
-            sight.May be its take some time please be patient .Enjoy new
-            features.
-          </p>
+          {profile ? (
+            <p className=" pt-7">
+              After the admin confirmation you can upload your own song to the
+              sight.May be its take some time please be patient .Enjoy new
+              features.
+            </p>
+          ) : (
+            <p className="pt-7">Please Compleate Your Profile First !</p>
+          )}
           <div className="modal-action">
-            <button
-              onClick={() => {
-                confirmationCaller();
-              }}
-              className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded"
-            >
-              Ok
-            </button>
+            {profile ? (
+              <button
+                onClick={() => {
+                  confirmationCaller();
+                }}
+                className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded"
+              >
+                Ok
+              </button>
+            ) : null}
             <button
               onClick={() => {
                 setOpen(false);

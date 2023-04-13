@@ -6,6 +6,7 @@ const initialState = {
   token: null,
   userType: null,
   userId: null,
+  profile: null,
 };
 
 export const userSlice = createSlice({
@@ -18,6 +19,7 @@ export const userSlice = createSlice({
       state.token = action.payload.token;
       state.userType = action.payload.userType;
       state.userId = action.payload.userId;
+      state.profile = action.payload.profile;
     },
     setLogout: (state) => {
       state.number = null;
@@ -25,6 +27,7 @@ export const userSlice = createSlice({
       state.token = null;
       state.userType = null;
       state.userId = null;
+      state.profile = null;
     },
   },
 });

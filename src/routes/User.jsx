@@ -1,12 +1,29 @@
-import { useSelector } from 'react-redux';
-import { Route, Routes } from 'react-router-dom';
+import { useSelector } from "react-redux";
+import { Route, Routes, useLocation } from "react-router-dom";
 
-import { Searchbar, Sidebar, MusicPlayer, TopPlay } from '../components';
-import { ArtistDetails, TopArtists, AroundYou, Discover,  SongDetails, TopCharts, } from '../pages';
-import Logout from '../components/Logout'; 
+import {
+  Searchbar,
+  Sidebar,
+  MusicPlayer,
+  TopPlay,
+  Logout,
+} from "../components";
+import {
+  ArtistDetails,
+  TopArtists,
+  AroundYou,
+  Discover,
+  SongDetails,
+  TopCharts,
+  Profile,
+} from "../pages";
 
 const User = () => {
   const { activeSong } = useSelector((state) => state.player);
+
+  const location = useLocation();
+
+  const isProfilePage = location.pathname === "/profile";
 
   return (
     <div className="relative flex">
@@ -23,12 +40,16 @@ const User = () => {
               <Route path="/around-you" element={<AroundYou />} />
               <Route path="/artists/:id" element={<ArtistDetails />} />
               <Route path="/songs/:songid" element={<SongDetails />} />
-              <Route path='/logout' element={<Logout/>} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/logout" element={<Logout />} />
             </Routes>
           </div>
-          <div className="xl:sticky relative top-0 h-fit">
-            <TopPlay />
-          </div>
+
+          {!isProfilePage && (
+            <div className="xl:sticky relative top-0 h-fit">
+              <TopPlay />
+            </div>
+          )}
         </div>
       </div>
 

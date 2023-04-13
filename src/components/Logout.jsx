@@ -10,9 +10,12 @@ function Logout() {
   const logout = () => {
     dispatch(
       setLogout({
-        token: null,
-        email: null,
         number: null,
+        email: null,
+        token: null,
+        userType:null,
+        userId:null,
+        profile:null,
       })
     );
     console.log("logout successfully worked");

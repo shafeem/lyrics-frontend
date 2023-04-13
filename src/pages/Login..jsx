@@ -3,7 +3,7 @@ import axios from "../axios/userInstance";
 import { LoginSocialGoogle } from "reactjs-social-login";
 import { Navigate, useNavigate } from "react-router-dom";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
-import { Auth } from "../firebase/firebase";
+import  {Auth}  from "../firebase/firebase";
 import { useDispatch } from "react-redux";
 import { setLogin } from "../redux/features/userSlice";
 
@@ -40,7 +40,8 @@ function Login() {
           email: res.data.email,
           name: res.data.name,
           userType:res.data.userType,
-          userId : res.data.userId
+          userId : res.data.userId,
+          profile:res.data.profile,
         })
       );
       navigate("/");
@@ -119,7 +120,8 @@ function Login() {
           token: response.data.token,
           number: number,
           userType:response.data.userType,
-          userId :response.data.userId
+          userId :response.data.userId,
+          profile:response.data.profile,
         })
       );
     });

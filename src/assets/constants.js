@@ -1,6 +1,7 @@
-import { HiOutlinePhotograph, HiOutlineUserGroup } from "react-icons/hi";
-import { FiLogIn, FiLogOut,FiSettings } from "react-icons/fi";
-import { AiOutlineHome,AiOutlineBarChart } from "react-icons/Ai";
+import { HiOutlineUserGroup } from "react-icons/hi";
+import { FiLogIn, FiLogOut } from "react-icons/fi";
+import { AiOutlineHome, AiOutlineBarChart } from "react-icons/Ai";
+import { CgProfile } from "react-icons/cg";
 
 export const genres = [
   { title: "Pop", value: "POP" },
@@ -30,7 +31,14 @@ export const LogoutLinks = [
   { name: "Discover", to: "/", icon: AiOutlineHome },
   { name: "Top Artists", to: "/top-artists", icon: HiOutlineUserGroup },
   { name: "Top Charts", to: "/top-charts", icon: AiOutlineBarChart },
-  {name:"Settings",to:"/settings",icon:FiSettings,test:"New Featur"},
+  { name: "Profile", to: "/profile", icon: CgProfile },
   { name: "Logout", to: "/logout", icon: FiLogOut },
 ];
 
+export const Admins = [
+  { name: "Dashbord", to: "/admin/dashbord", icon: AiOutlineHome },
+  { name: "Users", to: "/admin/users", icon: CgProfile },
+  { name: "Artists", to: "/admin/top-artists", icon: HiOutlineUserGroup },
+  { name: "Top Charts", to: "/admin/top-charts", icon: AiOutlineBarChart },
+  { name: "Logout", to: "/admin/logout", icon: FiLogOut },
+];

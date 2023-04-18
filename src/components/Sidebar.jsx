@@ -2,42 +2,54 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { RiCloseLine } from "react-icons/ri";
 import { logo } from "../assets";
-import { Loginlinks,LogoutLinks } from "../assets/constants";
+import { Loginlinks, LogoutLinks,ArtistLinks } from "../assets/constants";
 import { HiOutlineMenu } from "react-icons/hi";
 import { useSelector } from "react-redux";
 
 const NavLinks = (handleClick) => {
-  const { token } = useSelector((state) => state.userSlice);
+  const { token, userType } = useSelector((state) => state.userSlice);
 
-return (
-  <>
-    <div className="mt-10 ">
-      {token
-        ? LogoutLinks.map((item) => (
-            <NavLink
-              key={item.name}
-              to={item.to}
-              className="flex flex-row justify-start items-center my-8 text-sm font-medium text-gray-400 hover:text-cyan-400"
-              onClick={() => handleClick && handleClick()}
-            >
-              <item.icon className="w-6 h-6 mr-2" />
-              {item.name}
-            </NavLink>
-          ))
-        : Loginlinks.map((item) => (
-            <NavLink
-              key={item.name}
-              to={item.to}
-              className="flex flex-row justify-start items-center my-8 text-sm font-medium text-gray-400 hover:text-cyan-400"
-              onClick={() => handleClick && handleClick()}
-            >
-              <item.icon className="w-6 h-6 mr-2" />
-              {item.name}
-            </NavLink>
-          ))}
-    </div>
-  </>
-);
+  return (
+    <>
+      <div className="mt-10 ">
+        {token && userType == "artist"
+          ? ArtistLinks.map((item) => (
+              <NavLink
+                key={item.name}
+                to={item.to}
+                className="flex flex-row justify-start items-center my-8 text-sm font-medium text-gray-400 hover:text-cyan-400"
+                onClick={() => handleClick && handleClick()}
+              >
+                <item.icon className="w-6 h-6 mr-2" />
+                {item.name}
+              </NavLink>
+            ))
+          : token
+          ? LogoutLinks.map((item) => (
+              <NavLink
+                key={item.name}
+                to={item.to}
+                className="flex flex-row justify-start items-center my-8 text-sm font-medium text-gray-400 hover:text-cyan-400"
+                onClick={() => handleClick && handleClick()}
+              >
+                <item.icon className="w-6 h-6 mr-2" />
+                {item.name}
+              </NavLink>
+            ))
+          : Loginlinks.map((item) => (
+              <NavLink
+                key={item.name}
+                to={item.to}
+                className="flex flex-row justify-start items-center my-8 text-sm font-medium text-gray-400 hover:text-cyan-400"
+                onClick={() => handleClick && handleClick()}
+              >
+                <item.icon className="w-6 h-6 mr-2" />
+                {item.name}
+              </NavLink>
+            ))}
+      </div>
+    </>
+  );
 };
 
 const Sidebar = () => {

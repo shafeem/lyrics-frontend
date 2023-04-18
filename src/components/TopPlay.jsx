@@ -59,6 +59,8 @@ const TopPlay = () => {
 
   const topPlays = data?.tracks?.slice(0, 5);
 
+  console.log(topPlays,'the top play herer');
+
   const handlePlay = (song,i) => {
     dispatch(setActiveSong({ song, data, i }));
     dispatch(playPause(true));
@@ -117,13 +119,13 @@ const TopPlay = () => {
               style={{ width: "25%", height: "auto" }}
               className="shadow-lg rounded-full animate-slideright"
             >
-              {/* <Link to={`/artists/${song?.data?.artists[0].adamid}`}>
+              <Link to={`/artists/${song?.artists[0].adamid}`}>
                 <img
-                  src={song?.data?.images.background}
+                  src={song?.images?.background}
                   alt="artistsImages"
                   className="rounded-full w-full object-cover"
                 />
-              </Link> */}
+              </Link>
             </SwiperSlide>
           ))}
         </Swiper>

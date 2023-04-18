@@ -3,30 +3,43 @@ import { genres } from "../assets/constants";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../firebase/firebase";
 import axios from "../axios/userInstance";
+import { useSelector } from "react-redux";
+import back from "../assets/img/back.jpg";
 
 function AddSongs() {
   const [songName, setSongName] = useState();
   const [artistName, setArtistName] = useState();
   const [language, setLanguage] = useState();
   const [genre, setGenre] = useState("POP");
-  const [songImg,setSongImg] = useState()
-  const [songAudio,setSongAudio] = useState()
+  const [songImg, setSongImg] = useState("");
+  const [songAudio, setSongAudio] = useState("");
 
-  const songUploader = async () => {
+  const [imgSetter, setImgSetter] = useState(false);
+  const [audioSetter, setAudioSetter] = useState(false);
+
+  const { userId } = useSelector((state) => state.userSlice);
+
+  const songUploader = async (e) => {
     await axios({
-        url:"/songSubmitter",
-        method:"POST",
-        data:{
-            
-        }
-    })
+      url: "/songSubmitter",
+      method: "POST",
+      data: {
+        songName,
+        artistName,
+        language,
+        genre,
+        songImg,
+        songAudio,
+        userId,
+      },
+    }).then(() => {
+      console.log("its worked");
+    });
   };
 
-  const handleImgUploader =async ()=>{
-
+  const handleImgUploader = async (e) => {
     const image = e.target.files[0];
 
-  
     const imageref = ref(storage, `/songImg/${image?.name}`);
     console.log(imageref, "image of song");
     const uploadtask = uploadBytesResumable(imageref, image);
@@ -42,42 +55,41 @@ function AddSongs() {
       },
       () => {
         getDownloadURL(uploadtask.snapshot.ref).then((downloadURL) => {
-          console.log(downloadURL,"Image Uploaded successfully");
+          console.log(downloadURL, "Image Uploaded successfully");
           setSongImg(downloadURL);
+          setImgSetter(true);
         });
       }
     );
-  }
+  };
 
-    const handleAudioUploader = (e) => {
+  const handleAudioUploader = (e) => {
+    const audio = e.target.files[0];
+    console.log(audio);
 
-        const audio = e.target.files[0];
-        console.log(audio);
-      
-        const audioref = ref(storage, `/songAudio/${audio?.name}`);
-        console.log(audioref, "audio");
-        const uploadtask = uploadBytesResumable(audioref, audio);
-        uploadtask.on(
-          "state_changed",
-          (snapshot) => {
-            const progress = Math.round(
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-            );
-          },
-          (error) => {
-            console.log(error);
-          },
-          () => {
-            getDownloadURL(uploadtask.snapshot.ref).then((downloadURL) => {
-              console.log(downloadURL);
-              console.log("Audio Uploaded successfully");
-      
-              setSongAudio(downloadURL);
-            });
-          }
+    const audioref = ref(storage, `/songAudio/${audio?.name}`);
+    console.log(audioref, "audio");
+    const uploadtask = uploadBytesResumable(audioref, audio);
+    uploadtask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
         );
-      };
-
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        getDownloadURL(uploadtask.snapshot.ref).then((downloadURL) => {
+          console.log(downloadURL);
+          console.log("Audio Uploaded successfully");
+          setSongAudio(downloadURL);
+          setAudioSetter(true);
+        });
+      }
+    );
+  };
 
   return (
     <>
@@ -91,8 +103,7 @@ function AddSongs() {
             <div
               className="w-full h-auto bg-gray-400 hidden lg:block lg:w-5/12 bg-cover rounded-l-lg"
               style={{
-                backgroundImage:
-                  'url("https://source.unsplash.com/Mv9hjnEUHR4/600x800")',
+                backgroundImage: ` url(${back})`,
               }}
             />
             {/* Col */}
@@ -100,7 +111,7 @@ function AddSongs() {
               <h3 className="pt-4 text-2xl text-center">Upload Your Songs</h3>
               <form
                 className="px-8 pt-6 pb-8 mb-4 bg-white rounded"
-                onClick={(e) => {
+                onSubmit={(e) => {
                   songUploader(e);
                 }}
               >
@@ -117,6 +128,7 @@ function AddSongs() {
                       id="firstName"
                       type="text"
                       required
+                      value={songName}
                       onChange={(e) => {
                         setSongName(e.target.value);
                       }}
@@ -135,6 +147,7 @@ function AddSongs() {
                       id="lastName"
                       type="text"
                       required
+                      value={artistName}
                       onChange={(e) => {
                         setArtistName(e.target.value);
                       }}
@@ -153,6 +166,7 @@ function AddSongs() {
                     className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                     type="text"
                     required
+                    value={language}
                     onChange={(e) => {
                       setLanguage(e.target.value);
                     }}
@@ -219,12 +233,14 @@ function AddSongs() {
                   </div>
                 </div>
                 <div className="mb-6 text-center">
-                  <button
-                    className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
-                    type="submit"
-                  >
-                    Submit
-                  </button>
+                  {imgSetter && audioSetter ? (
+                    <button
+                      className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
+                      type="submit"
+                    >
+                      Submit
+                    </button>
+                  ) : null}
                 </div>
                 <hr className="mb-6 border-t" />
               </form>

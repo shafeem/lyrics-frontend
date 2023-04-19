@@ -159,7 +159,6 @@ function Login() {
               </label>
               <input
                 onChange={(e) => {
-                  console.log(e.target.value);
                   setOtp(e.target.value);
                 }}
                 type="text"

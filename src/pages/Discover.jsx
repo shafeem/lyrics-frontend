@@ -15,8 +15,6 @@ const Discover = () => {
 
   const { data, isFetching, error } = useGetTracksQuery();
 
-  console.log(data,'this is the data from the discover page');
-
   const {
     data: searchData,
     isFetching: isSearchFetching,

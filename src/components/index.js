@@ -11,6 +11,7 @@ import Loader from './Loader';
 import Error from './Error';
 import Logout from './Logout';
 import ProfileUser from './ProfileUser';
+import TopChartsCard from './TopChartsCard';
 
 export {
   TopPlay,
@@ -26,4 +27,5 @@ export {
   Error,
   Logout,
   ProfileUser,
+  TopChartsCard
 };

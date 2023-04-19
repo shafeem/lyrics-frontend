@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "../axios/userInstance";
-import { useSelector } from "react-redux";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../firebase/firebase";
+import {SongCard} from '../components'
+import { useDispatch,useSelector } from "react-redux";
 
 function ProfileUser() {
   const { userId } = useSelector((state) => state.userSlice);
@@ -15,9 +16,11 @@ function ProfileUser() {
   const [location, setLocation] = useState();
   const [language, setLanguate] = useState();
   const [img, setImg] = useState();
-  const [ImgUrl,setImgUrl] =useState();
+  const [ImgUrl, setImgUrl] = useState();
 
-  console.log(img, "this the img daata",img?.name);
+  const [songData,setSongData] = useState();
+
+  console.log(img, "this the img daata", img?.name);
 
   useEffect(() => {
     const dataCollector = async () => {
@@ -28,8 +31,11 @@ function ProfileUser() {
           userId: userId,
         },
       }).then((res) => {
-        console.log(res.data.data, "the datasdd");
+        console.log(res.data, "the datasdd");
         const dt = res.data.data;
+
+        setSongData(res.data)
+
         setName(dt.name);
         setEmail(dt.email);
         setDob(dt.dob);
@@ -47,7 +53,6 @@ function ProfileUser() {
     const image = e.target.files[0];
     console.log(image);
 
-    
     const imageref = ref(storage, `/artist/${image?.name}`);
     console.log(imageref, "image");
     const uploadtask = uploadBytesResumable(imageref, image);
@@ -86,12 +91,18 @@ function ProfileUser() {
         location: location,
         language: language,
         id: userId,
-        imgUrl:ImgUrl
+        imgUrl: ImgUrl,
       },
     }).then((response) => {
       console.log(response, "the response data");
     });
   };
+
+
+  const dispatch = useDispatch();
+  const { activeSong, isPlaying, genreListId } = useSelector(
+    (state) => state.player
+  );
 
   return (
     <div className="h-full bg-gradient-to-br from-black to-[#121286] p-8">
@@ -272,6 +283,21 @@ function ProfileUser() {
           </div>
         </div>
       </form>
+
+      <h2 className="text-xl text-white pt-5">Your Songs</h2>
+
+      <div className="flex flex-wrap sm:justify-start justify-center gap-8 pt-5">
+        {songData?.tracks?.map((song, i) => (
+          <SongCard
+            key={song.subtitle}
+            song={song}
+            i={i}
+            isPlaying={isPlaying}
+            activeSong={activeSong}
+            data={songData}
+          />
+        ))}
+      </div>
     </div>
   );
 }

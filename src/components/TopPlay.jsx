@@ -9,7 +9,6 @@ import { useGetTracksQuery } from "../redux/services/shazam";
 
 import "swiper/css";
 import "swiper/css/free-mode";
-import { TopCharts } from "../pages";
 
 const TopChartsCard = ({
   song,
@@ -119,13 +118,13 @@ const TopPlay = () => {
               style={{ width: "25%", height: "auto" }}
               className="shadow-lg rounded-full animate-slideright"
             >
-              <Link to={`/artists/${song?.artists[0].adamid}`}>
+              {/* <Link to={`/artists/${song?.artists[0].adamid}`}>
                 <img
                   src={song?.images?.background}
                   alt="artistsImages"
                   className="rounded-full w-full object-cover"
                 />
-              </Link>
+              </Link> */}
             </SwiperSlide>
           ))}
         </Swiper>

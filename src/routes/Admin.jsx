@@ -6,6 +6,7 @@ import {
   AdminOut,
   AdminSearchBar,
   AdminSideBar,
+  AdminPlaylist
 } from "../components/admin";
 import { Dashbord,AllUser,Songs } from "../pages/admin/";
 import {MusicPlayer} from '../components'
@@ -26,6 +27,7 @@ const User = () => {
               <Route path="/logout" element={<AdminOut />} />
               <Route path="/users" element={<AllUser/>} />
               <Route path="/songs" element={<Songs/>} />
+              <Route path="playlist" element={<AdminPlaylist/>} />
             </Routes>
           </div>
           <div className="xl:sticky relative top-0 h-fit">

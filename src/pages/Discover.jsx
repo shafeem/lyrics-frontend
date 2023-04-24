@@ -1,34 +1,55 @@
 import { Error, Loader, SongCard } from "../components";
 import { genres } from "../assets/constants";
-import {
-  useGetSpecificSongsQuery,
-  useGetTracksQuery,
-} from "../redux/services/shazam";
+// import {
+//   useGetSpecificSongsQuery,
+//   useGetTracksQuery,
+// } from "../redux/services/shazam";
 import { useDispatch, useSelector } from "react-redux";
 import { selectGenreListId } from "../redux/features/playerSlice";
+import { useEffect, useState } from "react";
+import axios from "../axios/userInstance";
 
 const Discover = () => {
   const dispatch = useDispatch();
+  const [data, setData] = useState();
+  const [songGenre, setSongGenre] = useState("POP");
+
+  var genreTitle;
+
+  console.log(songGenre, "the song genre");
+
+  useEffect(() => {
+    axios({
+      url: "/songFinder",
+      method: "GET",
+    }).then((res) => {
+      console.log(res.data, "the res.data here");
+      setData(res.data);
+    });
+  }, []);
+
   const { activeSong, isPlaying, genreListId } = useSelector(
     (state) => state.player
   );
 
-  const { data, isFetching, error } = useGetTracksQuery();
+  // const { data, isFetching, error } = useGetTracksQuery();
 
-  const {
-    data: searchData,
-    isFetching: isSearchFetching,
-    error: searchError,
-  } = useGetSpecificSongsQuery(genreListId || "POP");
+  // const {
+  //   data: searchData,
+  //   isFetching: isSearchFetching,
+  //   error: searchError,
+  // } = useGetSpecificSongsQuery(genreListId || "POP");
 
-  if (isFetching || isSearchFetching)
-    return <Loader title="Loading Songs..." />;
+  // if (isFetching || isSearchFetching)
+  //   return <Loader title="Loading Songs..." />;
 
-  if (error || searchError) return <Error />;
+  // if (error || searchError) return <Error />;
 
-  const genreTitle = genres.find(({ value }) => value === genreListId)?.title;
+  genreTitle = genres.find(({ value }) => value === genreListId)?.title;
 
-  console.log(searchData, "this is the search data here");
+  const filteredSongs = data?.tracks?.filter(
+    (music) => music.genre == songGenre
+  );
 
   return (
     <div className="flex flex-col ">
@@ -37,7 +58,10 @@ const Discover = () => {
           {genreTitle || "Pop"}{" "}
         </h3>
         <select
-          onChange={(e) => dispatch(selectGenreListId(e.target.value))}
+          onChange={(e) => {
+            dispatch(selectGenreListId(e.target.value));
+            setSongGenre(e.target.value);
+          }}
           value={genreListId || "Pop"}
           className="bg-black text-gray-300 p-3 text-sm rounded-lg outline-none sm:mt-0 mt-5 "
         >
@@ -51,14 +75,14 @@ const Discover = () => {
       </div>
 
       <div className=" flex flex-wrap sm:justify-start justify-center gap-8">
-        {searchData?.tracks?.hits.map((song, i) => (
+        {filteredSongs?.map((song, i) => (
           <SongCard
-            key={song.key}
-            song={song.track}
-            i={i}
-            isPlaying={isPlaying}
-            activeSong={activeSong}
-            data={searchData}
+          key={song.key}
+          song={song}
+          isPlaying={isPlaying}
+          activeSong={activeSong}
+          data={data}
+          i={i}
           />
         ))}
       </div>

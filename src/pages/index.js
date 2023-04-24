@@ -7,6 +7,7 @@ import TopCharts from './TopCharts';
 import AroundYou from './AroundYou';
 import Profile from './Profile'
 import AddSongs from './AddSongs';
+import UserCreatePlaylist from './UserCreatePlaylist';
 
 export {
   Discover,
@@ -18,4 +19,5 @@ export {
   AroundYou,
   Profile,
   AddSongs,
+  UserCreatePlaylist,
 };

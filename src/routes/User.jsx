@@ -17,7 +17,9 @@ import {
   TopCharts,
   Profile,
   AddSongs,
+  UserCreatePlaylist
 } from "../pages";
+import Playlist from "../pages/Playlist";
 
 const User = () => {
   const { activeSong } = useSelector((state) => state.player);
@@ -42,16 +44,18 @@ const User = () => {
               <Route path="/artists/:id" element={<ArtistDetails />} />
               <Route path="/songs/:songid" element={<SongDetails />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/createPlaylist" element={<UserCreatePlaylist />} />
+              <Route path="/playlist/:id" element={<Playlist/>} />
               <Route path="/add-songs" element={<AddSongs/>} />
               <Route path="/logout" element={<Logout />} />
             </Routes>
           </div>
 
-          {!isProfilePage && (
+          {/* {!isProfilePage && (
             <div className="xl:sticky relative top-0 h-fit">
               <TopPlay />
             </div>
-          )}
+          )} */}
         </div>
       </div>
 

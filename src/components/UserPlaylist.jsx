@@ -6,15 +6,17 @@ import { useSelector, useDispatch } from "react-redux";
 import back from "../assets/img/background.jpg";
 import { TopChartsCard } from "../components";
 import { playPause, setActiveSong } from "../redux/features/playerSlice";
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 
 function UserPlaylist() {
+  const navigate = useNavigate();
   const { id: playId } = useParams();
 
   const [playlistName, setPlaylistName] = useState("");
   const [playlistImg, setPlaylistImg] = useState();
   const [imgSetter, setImgSetter] = useState();
   const [playlistId, setPlaylistId] = useState(playId);
+  const [done,setDone] = useState(false);
 
   const [musicHider, setMusicHider] = useState(false);
 
@@ -50,14 +52,14 @@ function UserPlaylist() {
       data: {
         playlistImg: playlistImg,
         playlistName: playlistName,
-        playId:playId,
-        userId:userId
+        playId: playId,
+        userId: userId,
       },
     }).then((res) => {
+      setImgSetter(false)
+      setDone(true)
       console.log("its worked");
-      if(res.data.message == true)
-      setMusicHider(true);
-    
+      if (res.data.message == true) setMusicHider(true);
     });
   };
 
@@ -87,6 +89,11 @@ function UserPlaylist() {
       }
     );
   };
+
+  const playlistDone = (e)=>{
+    e.preventDefault();
+    navigate('/createPlaylist')
+  }
 
   return (
     <>
@@ -144,7 +151,7 @@ function UserPlaylist() {
                       </div>
                     </div>
                   </div>
-                ):null}
+                ) : null}
 
                 <hr className="mb-10 border-t" />
                 {musicHider ? (
@@ -170,7 +177,7 @@ function UserPlaylist() {
                       ))}
                     </div>
                   </div>
-                ):null}
+                ) : null}
                 <div className="mb-6 text-center">
                   {imgSetter ? (
                     <button
@@ -183,6 +190,17 @@ function UserPlaylist() {
                       Save
                     </button>
                   ) : null}
+                  {done ? (
+                      <button
+                      onClick={(e) => {
+                        playlistDone(e);
+                      }}
+                      className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
+                      type="submit"
+                    >
+                      Done
+                    </button>
+                  ):null}
                 </div>
               </form>
             </div>

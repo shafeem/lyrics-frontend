@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import back from "../assets/img/background.jpg";
 import { TopChartsCard } from "../components";
 import { playPause, setActiveSong } from "../redux/features/playerSlice";
-import { useParams,useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 function UserPlaylist() {
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ function UserPlaylist() {
   const [playlistImg, setPlaylistImg] = useState();
   const [imgSetter, setImgSetter] = useState();
   const [playlistId, setPlaylistId] = useState(playId);
-  const [done,setDone] = useState(false);
+  const [done, setDone] = useState(false);
 
   const [musicHider, setMusicHider] = useState(false);
 
@@ -56,8 +56,8 @@ function UserPlaylist() {
         userId: userId,
       },
     }).then((res) => {
-      setImgSetter(false)
-      setDone(true)
+      setImgSetter(false);
+      setDone(true);
       console.log("its worked");
       if (res.data.message == true) setMusicHider(true);
     });
@@ -90,10 +90,10 @@ function UserPlaylist() {
     );
   };
 
-  const playlistDone = (e)=>{
+  const playlistDone = (e) => {
     e.preventDefault();
-    navigate('/createPlaylist')
-  }
+    navigate("/createPlaylist");
+  };
 
   return (
     <>
@@ -191,7 +191,7 @@ function UserPlaylist() {
                     </button>
                   ) : null}
                   {done ? (
-                      <button
+                    <button
                       onClick={(e) => {
                         playlistDone(e);
                       }}
@@ -200,7 +200,7 @@ function UserPlaylist() {
                     >
                       Done
                     </button>
-                  ):null}
+                  ) : null}
                 </div>
               </form>
             </div>

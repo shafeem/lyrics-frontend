@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import axios from "../axios/userInstance";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../firebase/firebase";
-import {SongCard} from '../components'
-import { useDispatch,useSelector } from "react-redux";
+import { SongCard } from "../components";
+import { useDispatch, useSelector } from "react-redux";
+import PlayPause from "./PlayPause";
+import { playPause, setActiveSong } from "../redux/features/playerSlice";
+import { IoCloseSharp } from "react-icons/io5";
 
 function ProfileUser() {
   const { userId } = useSelector((state) => state.userSlice);
@@ -17,8 +20,17 @@ function ProfileUser() {
   const [language, setLanguate] = useState();
   const [img, setImg] = useState();
   const [ImgUrl, setImgUrl] = useState();
+  const [data, setData] = useState();
 
-  const [songData,setSongData] = useState();
+  const [songData, setSongData] = useState();
+
+  const handlePlay = (song, i) => {
+    dispatch(setActiveSong({ song, data, i }));
+    dispatch(playPause(true));
+  };
+  const handlePause = () => {
+    dispatch(playPause(false));
+  };
 
   console.log(img, "this the img daata", img?.name);
 
@@ -34,7 +46,8 @@ function ProfileUser() {
         console.log(res.data, "the datasdd");
         const dt = res.data.data;
 
-        setSongData(res.data)
+        setSongData(res.data);
+        setData(res.data.tracks);
 
         setName(dt.name);
         setEmail(dt.email);
@@ -98,7 +111,6 @@ function ProfileUser() {
     });
   };
 
-
   const dispatch = useDispatch();
   const { activeSong, isPlaying, genreListId } = useSelector(
     (state) => state.player
@@ -139,7 +151,7 @@ function ProfileUser() {
           </div>
           <p className="text-sm text-gray-500">{location}</p>
         </div>
-        <div className="flex-1 flex flex-col items-center lg:items-end justify-end px-8 mt-2">
+        {/* <div className="flex-1 flex flex-col items-center lg:items-end justify-end px-8 mt-2">
           <div className="flex items-center space-x-4 mt-2">
             <button className="flex items-center bg-blue-600 hover:bg-blue-700 text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100">
               <svg
@@ -168,7 +180,7 @@ function ProfileUser() {
               <span>Message</span>
             </button>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <form
@@ -284,17 +296,17 @@ function ProfileUser() {
         </div>
       </form>
 
-      <h2 className="text-xl text-white pt-5">Your Songs</h2>
+      <h2 className="text-xl text-white text-center pt-5">Your Songs</h2>
 
-      <div className="flex flex-wrap sm:justify-start justify-center gap-8 pt-5">
+      <div className="flex flex-wrap sm:justify-start justify-center gap-8">
         {songData?.tracks?.map((song, i) => (
           <SongCard
-            key={song.subtitle}
+            key={song.key}
             song={song}
             i={i}
             isPlaying={isPlaying}
             activeSong={activeSong}
-            data={songData}
+            data={data}
           />
         ))}
       </div>
@@ -303,3 +315,16 @@ function ProfileUser() {
 }
 
 export default ProfileUser;
+
+
+{/* <div className="flex justify-end ">
+<button
+  onClick={() => {
+    //  deleteSong(song.id);
+  }}
+  className="top-0 left-0 z-10 w-6 h-6 rounded-full bg-gray-800 flex items-center justify-center"
+  style={{ position: "relative" }}
+>
+  <IoCloseSharp className="w-4 h-4 text-white" />
+</button>
+</div> */}

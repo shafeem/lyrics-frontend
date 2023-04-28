@@ -30,7 +30,7 @@ function CreatePlaylist() {
         userId,
       },
     }).then((res) => {
-      console.log(res?.data?.data, "the response");
+      console.log(res?.data?.data, "the response from the create playlist page",'res.data.data');
       setData(res?.data?.data);
     });
   }, [mapData]);
@@ -86,6 +86,22 @@ function CreatePlaylist() {
     });
   };
 
+  const deletePlaylist = async(id)=>{
+    console.log('the log',id);
+
+    await axios({
+        url:'/deletePlaylist',
+        method:"POST",
+        data:{
+          playlistId:id,
+          userId:userId
+        }
+    }).then((res)=>{
+        console.log(res,'the response');
+        setMapData(res.data.datas)
+    })
+  }
+
   return (
     <div>
       <div className="flex sm:flex-row flex-col justify-start p-10 ">
@@ -130,7 +146,7 @@ function CreatePlaylist() {
                 />
                 <button
                   onClick={() => {
-                    // handle close button click
+                    deletePlaylist(playlist._id)
                   }}
                   className="absolute top-0 right-0 w-6 h-6 rounded-full bg-gray-800 flex items-center justify-center"
                 >

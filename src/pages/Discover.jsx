@@ -9,8 +9,8 @@ import { selectGenreListId } from "../redux/features/playerSlice";
 import { useEffect, useState } from "react";
 import axios from "../axios/userInstance";
 
+
 const Discover = () => {
-  const dispatch = useDispatch();
   const [data, setData] = useState();
   const [songGenre, setSongGenre] = useState("POP");
 
@@ -28,6 +28,7 @@ const Discover = () => {
     });
   }, []);
 
+  const dispatch = useDispatch();
   const { activeSong, isPlaying, genreListId } = useSelector(
     (state) => state.player
   );
@@ -77,12 +78,12 @@ const Discover = () => {
       <div className=" flex flex-wrap sm:justify-start justify-center gap-8">
         {filteredSongs?.map((song, i) => (
           <SongCard
-          key={song.key}
-          song={song}
-          isPlaying={isPlaying}
-          activeSong={activeSong}
-          data={data}
-          i={i}
+            key={song.key}
+            song={song}
+            isPlaying={isPlaying}
+            activeSong={activeSong}
+            data={data}
+            i={i}
           />
         ))}
       </div>
@@ -92,14 +93,18 @@ const Discover = () => {
 
       <div className="flex flex-wrap sm:justify-start justify-center gap-8">
         {data?.tracks?.map((song, i) => (
-          <SongCard
-            key={song.key}
-            song={song}
-            i={i}
-            isPlaying={isPlaying}
-            activeSong={activeSong}
-            data={data}
-          />
+          <div>
+            <div>
+              <SongCard
+                key={song.key}
+                song={song}
+                i={i}
+                isPlaying={isPlaying}
+                activeSong={activeSong}
+                data={data}
+              />
+            </div>
+          </div>
         ))}
       </div>
     </div>

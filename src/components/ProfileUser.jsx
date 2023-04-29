@@ -24,20 +24,20 @@ function ProfileUser() {
 
   const [songData, setSongData] = useState();
 
-  const handlePlay = (song, i) => {
-    dispatch(setActiveSong({ song, data, i }));
-    dispatch(playPause(true));
-  };
-  const handlePause = () => {
-    dispatch(playPause(false));
-  };
+  // const handlePlay = (song, i) => {
+  //   dispatch(setActiveSong({ song, data, i }));
+  //   dispatch(playPause(true));
+  // };
+  // const handlePause = () => {
+  //   dispatch(playPause(false));
+  // };
 
   console.log(img, "this the img daata", img?.name);
 
   useEffect(() => {
     const dataCollector = async () => {
       await axios({
-        url: "dataCollector",
+        url: "/dataCollector",
         method: "POST",
         data: {
           userId: userId,
@@ -115,6 +115,22 @@ function ProfileUser() {
   const { activeSong, isPlaying, genreListId } = useSelector(
     (state) => state.player
   );
+
+const deleteSong = async(id)=>{
+  console.log('the song id',id);
+
+  await axios({
+    url:"/deleteSongs",
+    method:"POST",
+    data:{
+      songId:id,
+      userId:userId
+    }
+  }).then((res)=>{
+    console.log(res.data,'the response .data');
+    setSongData(res.data);
+  })
+}
 
   return (
     <div className="h-full bg-gradient-to-br from-black to-[#121286] p-8">
@@ -300,14 +316,30 @@ function ProfileUser() {
 
       <div className="flex flex-wrap sm:justify-start justify-center gap-8">
         {songData?.tracks?.map((song, i) => (
-          <SongCard
-            key={song.key}
-            song={song}
-            i={i}
-            isPlaying={isPlaying}
-            activeSong={activeSong}
-            data={data}
-          />
+          <div className="pt-5">
+            <div className="flex justify-end ">
+              <button
+              key={song?._id}
+                onClick={() => {
+                   deleteSong(song._id);
+                }}
+                className="top-0 left-0 z-10 w-6 h-6 rounded-full bg-gray-800 flex items-center justify-center"
+                style={{ position: "relative" }}
+              >
+                <IoCloseSharp className="w-4 h-4 text-white" />
+              </button>
+            </div>
+            <div>
+              <SongCard
+                key={song.key}
+                song={song}
+                i={i}
+                isPlaying={isPlaying}
+                activeSong={activeSong}
+                data={data}
+              />
+            </div>
+          </div>
         ))}
       </div>
     </div>
@@ -315,16 +347,3 @@ function ProfileUser() {
 }
 
 export default ProfileUser;
-
-
-{/* <div className="flex justify-end ">
-<button
-  onClick={() => {
-    //  deleteSong(song.id);
-  }}
-  className="top-0 left-0 z-10 w-6 h-6 rounded-full bg-gray-800 flex items-center justify-center"
-  style={{ position: "relative" }}
->
-  <IoCloseSharp className="w-4 h-4 text-white" />
-</button>
-</div> */}

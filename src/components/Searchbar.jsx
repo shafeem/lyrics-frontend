@@ -28,6 +28,7 @@ const Searchbar = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(search,'the search');
 
     navigate(`/search/${search}`);
   };

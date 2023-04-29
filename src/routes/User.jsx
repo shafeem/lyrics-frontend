@@ -17,7 +17,8 @@ import {
   TopCharts,
   Profile,
   AddSongs,
-  UserCreatePlaylist
+  UserCreatePlaylist,
+  Search,
 } from "../pages";
 import Playlist from "../pages/Playlist";
 
@@ -46,6 +47,7 @@ const User = () => {
               <Route path="/profile" element={<Profile />} />
               <Route path="/createPlaylist" element={<UserCreatePlaylist />} />
               <Route path="/playlist/:id" element={<Playlist/>} />
+              <Route path="search/:term" element={<Search/>} />
               <Route path="/add-songs" element={<AddSongs/>} />
               <Route path="/logout" element={<Logout />} />
             </Routes>

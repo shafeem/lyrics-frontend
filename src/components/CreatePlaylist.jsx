@@ -7,6 +7,7 @@ import PlayPause from "./PlayPause";
 import { playPause, setActiveSong } from "../redux/features/playerSlice";
 import { MdDelete } from "react-icons/md";
 import { IoCloseSharp } from "react-icons/io5";
+import { SongCard } from "../components";
 
 function CreatePlaylist() {
   var filteredSongs;
@@ -18,6 +19,7 @@ function CreatePlaylist() {
   const [playId, setPlayId] = useState();
   const [playlistId, setPlaylistId] = useState();
   const [reloader, setReloader] = useState(false);
+  const [songData, setSongData] = useState();
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -30,18 +32,18 @@ function CreatePlaylist() {
         userId,
       },
     }).then((res) => {
-      console.log(res?.data?.data, "the response from the create playlist page",'res.data.data');
+      console.log(res, "res");
       setData(res?.data?.data);
     });
   }, [mapData]);
 
-  const handlePlay = (song, i) => {
-    dispatch(setActiveSong({ song, data, i }));
-    dispatch(playPause(true));
-  };
-  const handlePause = () => {
-    dispatch(playPause(false));
-  };
+  // const handlePlay = (song, i) => {
+  //   dispatch(setActiveSong({ song, data, i }));
+  //   dispatch(playPause(true));
+  // };
+  // const handlePause = () => {
+  //   dispatch(playPause(false));
+  // };
 
   const playListCreation = async () => {
     await axios({
@@ -64,7 +66,9 @@ function CreatePlaylist() {
     console.log(filteredSongs?.songs, "filtered---- songs");
     console.log(filteredSongs, "the filtered songs ");
     console.log(data, "the data ");
-    setMapData(filteredSongs?.songs);
+
+    setSongData(filteredSongs?.songs);
+    // setMapData(filteredSongs?.songs);
     setShower(true);
   };
 
@@ -86,24 +90,24 @@ function CreatePlaylist() {
     });
   };
 
-  const deletePlaylist = async(id)=>{
-    console.log('the log',id);
+  const deletePlaylist = async (id) => {
+    console.log("the log", id);
 
     await axios({
-        url:'/deletePlaylist',
-        method:"POST",
-        data:{
-          playlistId:id,
-          userId:userId
-        }
-    }).then((res)=>{
-        console.log(res,'the response');
-        setMapData(res.data.datas)
-    })
-  }
+      url: "/deletePlaylist",
+      method: "POST",
+      data: {
+        playlistId: id,
+        userId: userId,
+      },
+    }).then((res) => {
+      console.log(res, "the response");
+      setMapData(res.data.datas);
+    });
+  };
 
   return (
-    <div>
+    <>
       <div className="flex sm:flex-row flex-col justify-start p-10 ">
         <div>
           <img
@@ -146,7 +150,7 @@ function CreatePlaylist() {
                 />
                 <button
                   onClick={() => {
-                    deletePlaylist(playlist._id)
+                    deletePlaylist(playlist._id);
                   }}
                   className="absolute top-0 right-0 w-6 h-6 rounded-full bg-gray-800 flex items-center justify-center"
                 >
@@ -160,73 +164,39 @@ function CreatePlaylist() {
           ))}
         </div>
       </div>
-      <div className="flex flex-col w-8/12 pt-14 ">
+
+      <div>
         {shower && (
           <h2 className="text-lg text-white/50 pb-5">Playlist Songs </h2>
         )}
-        {mapData?.map((song, i) => (
-          <div>
-            <div className="w-full flex flex-row items-center bg-slate-400 hover:bg-[rgb(76,66,110)] py-2 p-4 rounded-lg cursor-pointer mb-2">
-              <div className="flex-1 flex flex-row justify-between items-center">
-                <img
-                  className="w-20 h-20 rounded-lg "
-                  src={song?.images?.coverart}
-                  alt={song?.title}
-                />
-                <div className="flex-1 flex flex-col justify-center mx-3">
-                  <p className="text-base font-bold text-black">
-                    {song?.title}
-                  </p>
-                  <p className="text-sm text-gray-800 mt-1 ">
-                    {song?.subtitle}
-                  </p>
-                </div>
+        <div className="flex flex-row justify-start gap-8 pt-10">
+          {songData?.map((song, i) => (
+            <div>
+              <div className="flex justify-end">
+                <button
+                  onClick={() => {
+                    songRemover(song?._id, playlistId);
+                  }}
+                  className="top-0 right-0 w-6 h-6 rounded-full bg-gray-800 flex items-center justify-center"
+                >
+                  <IoCloseSharp className="w-4 h-4 text-white" />
+                </button>
               </div>
-              <PlayPause
-                isPlaying={isPlaying}
-                activeSong={activeSong}
-                song={song}
-                handlePause={handlePause}
-                handlePlay={() => handlePlay(song, i)}
-              />
-              <MdDelete
-                className="ml-10 h-7 w-7 "
-                onClick={() => {
-                  songRemover(song?._id, playlistId);
-                }}
-              />
-              {/* <div className="pl-10">
-        {!button ? (
-          <button
-            key={song?._id}
-            onClick={() => {
-              setButton(true);
-              addPlaylistSong(song?._id);
-            }}
-            type="button"
-            className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-          >
-            Add
-          </button>
-        ) : (
-          <button
-            key={song?._id}
-            onClick={() => {
-              deletePlaylistSongs(song?._id);
-              setButton(false);
-            }}
-            type="button"
-            className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-          >
-            Remove
-          </button>
-        )}
-      </div> */}
+              <div>
+                <SongCard
+                  key={song.key}
+                  song={song}
+                  i={i}
+                  isPlaying={isPlaying}
+                  activeSong={activeSong}
+                  data={songData}
+                />
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

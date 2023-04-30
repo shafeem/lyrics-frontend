@@ -12,6 +12,7 @@ import axios from "../axios/userInstance";
 
 const Discover = () => {
   const [data, setData] = useState();
+  const [songData,setSongData] = useState();
   const [songGenre, setSongGenre] = useState("POP");
 
   var genreTitle;
@@ -24,7 +25,8 @@ const Discover = () => {
       method: "GET",
     }).then((res) => {
       console.log(res.data, "the res.data here");
-      setData(res.data);
+      setData(res.data.tracks);
+      setSongData(res.data)
     });
   }, []);
 
@@ -48,9 +50,10 @@ const Discover = () => {
 
   genreTitle = genres.find(({ value }) => value === genreListId)?.title;
 
-  const filteredSongs = data?.tracks?.filter(
+  const filteredSongs = songData?.tracks?.filter(
     (music) => music.genre == songGenre
   );
+  console.log(filteredSongs,'the filtered songs')
 
   return (
     <div className="flex flex-col ">
@@ -82,7 +85,7 @@ const Discover = () => {
             song={song}
             isPlaying={isPlaying}
             activeSong={activeSong}
-            data={data}
+            data={filteredSongs}
             i={i}
           />
         ))}
@@ -92,7 +95,7 @@ const Discover = () => {
       </h2>
 
       <div className="flex flex-wrap sm:justify-start justify-center gap-8">
-        {data?.tracks?.map((song, i) => (
+        {songData?.tracks?.map((song, i) => (
           <div>
             <div>
               <SongCard

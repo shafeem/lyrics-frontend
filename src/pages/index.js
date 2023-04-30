@@ -8,6 +8,7 @@ import AroundYou from './AroundYou';
 import Profile from './Profile'
 import AddSongs from './AddSongs';
 import UserCreatePlaylist from './UserCreatePlaylist';
+import Favorites from './Favorites'
 
 export {
   Discover,
@@ -20,4 +21,5 @@ export {
   Profile,
   AddSongs,
   UserCreatePlaylist,
+  Favorites,
 };

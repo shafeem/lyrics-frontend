@@ -45,7 +45,7 @@ export const Loginlinks = [
   { name: "Discover", to: "/", icon: AiOutlineHome },
   { name: "Top Artists", to: "/top-artists", icon: HiOutlineUserGroup },
   // { name: "Top Charts", to: "/top-charts", icon: AiOutlineBarChart },
-  { name: "Favorites", to: "/favorites", icon: AiOutlineHeart },
+    { name: "Favorites", to: "/favorites", icon: AiOutlineHeart },
   { name: "Login", to: "/login", icon: FiLogIn },
 ];
 
@@ -54,7 +54,7 @@ export const LogoutLinks = [
   { name: "Top Artists", to: "/top-artists", icon: HiOutlineUserGroup },
   // { name: "Top Charts", to: "/top-charts", icon: AiOutlineBarChart },
   { name: "Profile", to: "/profile", icon: CgProfile },
-  { name: "Create PlayList", to: "/playlist", icon: MdPlaylistAdd },
+  { name: "PlayList", to: "/playlist", icon: MdPlaylistAdd },
   { name: "Favorites", to: "/favorites", icon: AiOutlineHeart },
   { name: "Logout", to: "/logout", icon: FiLogOut },
 ];
@@ -63,7 +63,7 @@ export const ArtistLinks = [
   { name: "Add Songs", to: "/add-songs", icon: IoMdAddCircleOutline },
   // { name: "Top Charts", to: "/top-charts", icon: AiOutlineBarChart },
   { name: "Profile", to: "/profile", icon: CgProfile },
-  { name: "Create PlayList", to: "/createPlaylist", icon: MdPlaylistAdd },
+  { name: "PlayList", to: "/createPlaylist", icon: MdPlaylistAdd },
   { name: "Favorites", to: "/favorites", icon: AiOutlineHeart },
   { name: "Logout", to: "/logout", icon: FiLogOut },
 ];

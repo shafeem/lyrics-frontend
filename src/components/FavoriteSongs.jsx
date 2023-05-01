@@ -8,7 +8,7 @@ function FavoriteSongs() {
   const { activeSong, isPlaying } = useSelector((state) => state.player);
 
   const [data, setData] = useState();
-  const [songData,setSongData] = useState();
+  const [songData, setSongData] = useState();
 
   useEffect(() => {
     axios({
@@ -20,7 +20,7 @@ function FavoriteSongs() {
     }).then((res) => {
       console.log(res, "the response");
       setData(res.data.tracks);
-      setSongData(res.data)
+      setSongData(res.data);
     });
   }, []);
 
@@ -29,16 +29,16 @@ function FavoriteSongs() {
       <h3 className="text-lg text-white/50 font-bold font-sans pt-5">
         Favorite Songs
       </h3>
-      <div>
-        {songData?.tracks?.map((song,i) => (
-             <SongCard
-             key={song.key}
-             song={song}
-             i={i}
-             isPlaying={isPlaying}
-             activeSong={activeSong}
-             data={data}
-           />
+      <div className="flex flex-col sm:flex-row gap-8">
+        {songData?.tracks?.map((song, i) => (
+          <SongCard
+            key={song.key}
+            song={song}
+            i={i}
+            isPlaying={isPlaying}
+            activeSong={activeSong}
+            data={data}
+          />
         ))}
       </div>
     </div>

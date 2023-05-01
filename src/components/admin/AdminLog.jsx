@@ -5,6 +5,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLogin } from "../../redux/features/adminSlice";
+import back from "../../assets/img/back.jpg";
+import backg from "../../assets/img/backg.jpeg";
 
 const AdminLog = () => {
   const [Email, setEmail] = useState("");
@@ -64,38 +66,49 @@ const AdminLog = () => {
   };
 
   return (
-    <div className="flex flex-col relative justify-center min-h-screen overflow-hidden">
-      <div className="pb-96 mb-8 w-72 m-auto rounded-lg lg:max-w-xl">
-        <form className="" onSubmit={verifyChecker}>
-          <div className="mb-2">
-            <label className="block text-sm font-semibold text-white/50">
-              Email
-            </label>
-            <input
-              type="text"
-              onChange={emailSetter}
-              placeholder="Enter Your Email"
-              className="block w-full px-4 py-2 mt-2 text-gray-800 bg-slate-200 rounded-md focus:border-gray-800 focus:outline-none focus:ring focus:ring-opacity-100"
+    <div className="container mx-auto">
+      <div className="flex justify-center px-6 my-12">
+        <div className="w-full  xl:w-3/4 lg:w-11/12 flex justify-center pt-10 h-96">
+            <div
+              className=" w-full h-auto bg-gray-400 hidden lg:block lg:w-5/12 bg-cover rounded-l-lg"
+              style={{
+                backgroundImage: ` url(${backg})`,
+              }}
             />
+          <div className="w-5/12 bg-white/5 p-5 rounded-lg lg:rounded-l-none flex justify-center">
+            {" "}
+            <form className="" onSubmit={verifyChecker}>
+              <div className="mb-2 pt-10 w-52" >
+                <label className="block text-sm font-semibold text-white/50">
+                  Email
+                </label>
+                <input
+                  type="text"
+                  onChange={emailSetter}
+                  placeholder="Enter Your Email"
+                  className="block w-full px-4 py-2 mt-2 text-gray-800 bg-slate-200 rounded-md focus:border-gray-800 focus:outline-none focus:ring focus:ring-opacity-100"
+                />
+              </div>
+              <div className="mt-3">
+                <label className="block text-sm font-semibold text-white/50">
+                  PassWord
+                </label>
+                <input
+                  onChange={passwordSetter}
+                  type="password"
+                  placeholder="xxxxx"
+                  className="block w-full px-4 py-2 mt-2 text-gray-800 bg-slate-200 rounded-md focus:border-gray-800 focus:outline-none focus:ring focus:ring-opacity-100"
+                />
+              </div>
+              <div className="mt-6">
+                <button className="items-center justify-center w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform rounded-md bg-gray-800  focus:outline-none focus:bg-gray-800">
+                  Submit
+                </button>
+                <ToastContainer />
+              </div>
+            </form>
           </div>
-          <div className="mt-3">
-            <label className="block text-sm font-semibold text-white/50">
-              PassWord
-            </label>
-            <input
-              onChange={passwordSetter}
-              type="password"
-              placeholder="xxxxx"
-              className="block w-full px-4 py-2 mt-2 text-gray-800 bg-slate-200 rounded-md focus:border-gray-800 focus:outline-none focus:ring focus:ring-opacity-100"
-            />
-          </div>
-          <div className="mt-6">
-            <button className="items-center justify-center w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform rounded-md bg-gray-800  focus:outline-none focus:bg-gray-800">
-              Submit
-            </button>
-            <ToastContainer />
-          </div>
-        </form>
+        </div>
       </div>
     </div>
   );

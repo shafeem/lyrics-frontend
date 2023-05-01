@@ -38,7 +38,7 @@ function AdminSongs() {
             i={i}
             isPlaying={isPlaying}
             activeSong={activeSong}
-            data={songData}
+            data={songData.tracks}
 
           />
     ))}

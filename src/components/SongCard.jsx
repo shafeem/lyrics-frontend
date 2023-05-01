@@ -6,9 +6,17 @@ import { playPause, setActiveSong } from "../redux/features/playerSlice";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/Ai";
 import axios from "../axios/userInstance";
 import { MdPlaylistAdd } from "react-icons/md";
-import {message} from 'antd'
+import { message } from "antd";
 
-const SongCard = ({ song, i, isPlaying, activeSong, data, }) => {
+const SongCard = ({
+  song,
+  i,
+  isPlaying,
+  activeSong,
+  data,
+  setRefresh,
+  refresh,
+}) => {
   const [likedSongs, setLikedSongs] = useState();
   const [tabOpener, setTapOpener] = useState(false);
   const [playData, setPlayData] = useState();
@@ -46,20 +54,19 @@ const SongCard = ({ song, i, isPlaying, activeSong, data, }) => {
     await axios({
       url: "/addSongToPlaylist",
       method: "POST",
-      data:{
-        songId:songId,
-        playId:id,
+      data: {
+        songId: songId,
+        playId: id,
+      },
+    }).then((res) => {
+      console.log(res, "the response at the songcard");
+      if (res.data.message == "success") {
+        message.success("Song Added Successfully");
+        setTapOpener(!tabOpener);
+      } else {
+        message.error("Song Already There");
       }
-    }).then((res)=>{
-      console.log(res,'the response at the songcard');
-      if(res.data.message == "success"){
-        message.success('Song Added Successfully')
-        setTapOpener(!tabOpener)
-      }else{
-        message.error('Song Already There')
-      }
-
-    })
+    });
   };
 
   const handlePlay = () => {
@@ -81,9 +88,8 @@ const SongCard = ({ song, i, isPlaying, activeSong, data, }) => {
         userId,
       },
     }).then((res) => {
-      console.log(res, "the res'''''''''''''''''''''''''''''''''");
       setLikedSongs(res.data.user.likedSongs);
-      // songLiked(res.data.user.likedSongs)
+      setRefresh(!refresh);
     });
   };
 
@@ -122,9 +128,7 @@ const SongCard = ({ song, i, isPlaying, activeSong, data, }) => {
             {song.title}
           </p>
           <p className="text-sm truncate text-gray-300 mt-1">
-            <Link to={`/artists/${song.artists}`}>
-              {song?.subtitle}
-            </Link>
+            <Link to={`/artists/${song.artists}`}>{song?.subtitle}</Link>
           </p>
           <div className="flex flex-row-reverse " key={song._id}>
             <button onClick={() => moreFuntion(song._id)}>
@@ -133,7 +137,9 @@ const SongCard = ({ song, i, isPlaying, activeSong, data, }) => {
 
             <button
               className="text-red-700"
-              onClick={() => handleLikeSongs(song._id)}
+              onClick={() => {
+                handleLikeSongs(song._id);
+              }}
             >
               {likedSongs?.includes(song._id) ? (
                 <AiFillHeart className="w-6 h-6" />

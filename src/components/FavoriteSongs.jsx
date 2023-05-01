@@ -9,6 +9,7 @@ function FavoriteSongs() {
 
   const [data, setData] = useState();
   const [songData, setSongData] = useState();
+  const [refresh,setRefresh] = useState(false)
 
   useEffect(() => {
     axios({
@@ -22,7 +23,8 @@ function FavoriteSongs() {
       setData(res.data.tracks);
       setSongData(res.data);
     });
-  }, []);
+  }, [refresh]);
+ 
 
   return (
     <div>
@@ -38,6 +40,8 @@ function FavoriteSongs() {
             isPlaying={isPlaying}
             activeSong={activeSong}
             data={data}
+            setRefresh={setRefresh}
+            refresh={refresh}
           />
         ))}
       </div>

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "../../axios/adminInstance";
 
 function AllUser() {
-
   const [data, setData] = useState([]);
   const [role, setRole] = useState("All");
   const [change, setChange] = useState();
@@ -64,7 +63,6 @@ function AllUser() {
 
   return (
     <>
-      {/* component */}
       <div className="container mx-auto px-4 sm:px-8">
         <div className="py-8">
           <div>
@@ -80,9 +78,9 @@ function AllUser() {
                     setRole(e.target.value);
                     roleFinder();
                   }}
-                  className=" h-full rounded-r border-t sm:rounded-r-none sm:border-r-0 border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500"
+                  className=" h-full rounded-lg border-t  sm:border-r-0 border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500"
                 >
-                  <option value={"All"}>All</option>
+                  <option className="" value={"All"}>All</option>
                   <option value={"user"}>User</option>
                   <option value={"pending"}>Pending</option>
                   <option value={"artist"}>Artist</option>
@@ -98,7 +96,6 @@ function AllUser() {
                 </div>
               </div>
             </div>
-            
           </div>
           <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
             <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">

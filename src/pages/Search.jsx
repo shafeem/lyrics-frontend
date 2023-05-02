@@ -2,13 +2,14 @@ import { useSelector } from "react-redux";
 import { Error, Loader, SongCard } from "../components";
 import { useGetSpecificSongsQuery } from "../redux/services/shazam";
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from '../axios/userInstance'
 
 const Search = () => {
+  const [songData,setSongData] = useState()
   const { term } = useParams();
   const { activeSong, isPlaying } = useSelector((state) => state.player);
-  const { data, isFetching, error } = useGetSpecificSongsQuery(term);
+  // const { data, isFetching, error } = useGetSpecificSongsQuery(term);
 
   useEffect(()=>{
     axios({
@@ -17,12 +18,15 @@ const Search = () => {
       data:{
         term
       }
+    }).then((res)=>{
+      setSongData(res?.data?.tracks)
+      console.log(songData,'the response');
     })
-  })
+  },[term])
 
-  if (isFetching) return <Loader title="Loading Top Charts" />;
+  // if (isFetching) return <Loader title="Loading Top Charts" />;
 
-  if (error) return <Error />;
+  // if (error) return <Error />;
 
 
   return (
@@ -32,13 +36,13 @@ const Search = () => {
       </h2>
 
       <div className="flex flex-wrap sm:justify-start justify-center gap-8">
-        {data?.tracks?.hits?.map((song, i) => (
+        {songData?.map((song, i) => (
           <SongCard
             key={song.key}
-            song={song?.track}
+            song={song}
             isPlaying={isPlaying}
             activeSong={activeSong}
-            data={data}
+            data={songData}
             i={i}
           />
         ))}

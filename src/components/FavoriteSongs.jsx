@@ -9,7 +9,7 @@ function FavoriteSongs() {
 
   const [data, setData] = useState();
   const [songData, setSongData] = useState();
-  const [refresh,setRefresh] = useState(false)
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     axios({
@@ -24,14 +24,17 @@ function FavoriteSongs() {
       setSongData(res.data);
     });
   }, [refresh]);
- 
+
+  const refreshInvoker = () => {
+    setRefresh(!refresh);
+  };
 
   return (
     <div>
       <h3 className="text-lg text-white/50 font-bold font-sans pt-5">
         Favorite Songs
       </h3>
-      <div className="flex flex-col sm:flex-row gap-8">
+      <div className=" flex flex-wrap sm:justify-start justify-center gap-8">
         {songData?.tracks?.map((song, i) => (
           <SongCard
             key={song.key}
@@ -40,8 +43,7 @@ function FavoriteSongs() {
             isPlaying={isPlaying}
             activeSong={activeSong}
             data={data}
-            setRefresh={setRefresh}
-            refresh={refresh}
+            refreshInvoker={refreshInvoker}
           />
         ))}
       </div>

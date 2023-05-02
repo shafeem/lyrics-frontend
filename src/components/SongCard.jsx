@@ -14,8 +14,7 @@ const SongCard = ({
   isPlaying,
   activeSong,
   data,
-  setRefresh,
-  refresh,
+  refreshInvoker,
 }) => {
   const [likedSongs, setLikedSongs] = useState();
   const [tabOpener, setTapOpener] = useState(false);
@@ -89,7 +88,9 @@ const SongCard = ({
       },
     }).then((res) => {
       setLikedSongs(res.data.user.likedSongs);
-      setRefresh(!refresh);
+      if(refreshInvoker){
+        refreshInvoker()
+      }
     });
   };
 

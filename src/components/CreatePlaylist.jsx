@@ -169,7 +169,7 @@ function CreatePlaylist() {
         {shower && (
           <h2 className="text-lg text-white/50 pb-5">Playlist Songs </h2>
         )}
-        <div className="flex flex-row justify-start gap-8 pt-10">
+        <div className=" flex flex-wrap sm:justify-start justify-center gap-8">
           {songData?.map((song, i) => (
             <div>
               <div className="flex justify-end">
@@ -182,7 +182,7 @@ function CreatePlaylist() {
                   <IoCloseSharp className="w-4 h-4 text-white" />
                 </button>
               </div>
-              <div>
+              <div className=" flex flex-wrap sm:justify-start justify-center gap-8">
                 <SongCard
                   key={song.key}
                   song={song}

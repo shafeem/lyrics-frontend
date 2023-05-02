@@ -9,6 +9,7 @@ import Profile from './Profile'
 import AddSongs from './AddSongs';
 import UserCreatePlaylist from './UserCreatePlaylist';
 import Favorites from './Favorites'
+import SongEdit from './SongEdit';
 
 export {
   Discover,
@@ -22,4 +23,5 @@ export {
   AddSongs,
   UserCreatePlaylist,
   Favorites,
+  SongEdit
 };

@@ -7,6 +7,9 @@ import { useDispatch, useSelector } from "react-redux";
 import PlayPause from "./PlayPause";
 import { playPause, setActiveSong } from "../redux/features/playerSlice";
 import { IoCloseSharp } from "react-icons/io5";
+import { MdOutlineModeEditOutline } from "react-icons/md";
+import { message } from "antd";
+import { useNavigate } from "react-router-dom";
 
 function ProfileUser() {
   const { userId } = useSelector((state) => state.userSlice);
@@ -23,6 +26,9 @@ function ProfileUser() {
   const [data, setData] = useState();
 
   const [songData, setSongData] = useState();
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // const handlePlay = (song, i) => {
   //   dispatch(setActiveSong({ song, data, i }));
@@ -92,6 +98,7 @@ function ProfileUser() {
 
   const profileSubmit = async (e) => {
     e.preventDefault();
+    console.log("sdf");
 
     await axios({
       url: "/profileSubmit",
@@ -108,29 +115,39 @@ function ProfileUser() {
       },
     }).then((response) => {
       console.log(response, "the response data");
+
+      if (response.data.message === "success") {
+        message.success("Profile Updated Successfully");
+      } else {
+        message.error("Profile Updated Failed");
+      }
     });
   };
 
-  const dispatch = useDispatch();
   const { activeSong, isPlaying, genreListId } = useSelector(
     (state) => state.player
   );
 
-const deleteSong = async(id)=>{
-  console.log('the song id',id);
+  const deleteSong = async (id) => {
+    console.log("the song id", id);
 
-  await axios({
-    url:"/deleteSongs",
-    method:"POST",
-    data:{
-      songId:id,
-      userId:userId
-    }
-  }).then((res)=>{
-    console.log(res.data,'the response .data');
-    setSongData(res.data);
-  })
-}
+    await axios({
+      url: "/deleteSongs",
+      method: "POST",
+      data: {
+        songId: id,
+        userId: userId,
+      },
+    }).then((res) => {
+      console.log(res.data, "the response .data");
+      setSongData(res.data);
+    });
+  };
+
+  const songEditer = async (songId) => {
+    console.log("the songid", songId);
+    navigate(`/edit-songs/${songId}`);
+  };
 
   return (
     <div className="h-full bg-gradient-to-br from-black to-[#121286] p-8">
@@ -144,7 +161,8 @@ const deleteSong = async(id)=>{
         <div className="flex flex-col items-center -mt-20">
           <img
             src={ImgUrl}
-            className="w-40 border-4 border-white rounded-full h-40"
+            // className="w-40 border-4 border-white rounded-full h-40"
+            className="w-36  h-36 rounded-full object-cover border-2 shadow-xl shadow-black"
           />
           <div className="flex items-center space-x-2 mt-2">
             <p className="text-2xl">{name}</p>
@@ -317,11 +335,21 @@ const deleteSong = async(id)=>{
       <div className="flex flex-wrap sm:justify-start justify-center gap-8">
         {songData?.tracks?.map((song, i) => (
           <div className="pt-5">
-            <div className="flex justify-end ">
+            <div className="flex justify-between ">
               <button
-              key={song?._id}
                 onClick={() => {
-                   deleteSong(song._id);
+                  songEditer(song._id);
+                }}
+                key={song?.title}
+                className="top-0 left-0 z-10 w-6 h-6 rounded-full bg-gray-800 flex items-center justify-center"
+                // style={{ position: "relative" }}
+              >
+                <MdOutlineModeEditOutline className="w-4 h-4 text-white" />
+              </button>
+              <button
+                key={song?._id}
+                onClick={() => {
+                  deleteSong(song._id);
                 }}
                 className="top-0 left-0 z-10 w-6 h-6 rounded-full bg-gray-800 flex items-center justify-center"
                 style={{ position: "relative" }}
@@ -329,6 +357,7 @@ const deleteSong = async(id)=>{
                 <IoCloseSharp className="w-4 h-4 text-white" />
               </button>
             </div>
+
             <div>
               <SongCard
                 key={song.key}

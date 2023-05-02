@@ -14,6 +14,7 @@ import ProfileUser from './ProfileUser';
 import TopChartsCard from './TopChartsCard';
 import UserPlaylist from './UserPlaylist';
 import CreatePlaylist from './CreatePlaylist';
+import UserSongEdit from './UserSongEdit';
 
 export {
   TopPlay,
@@ -23,7 +24,7 @@ export {
   ArtistCard,
   DetailsHeader,
   SongBar,
-  RelatedSongs,
+  RelatedSongs, 
   MusicPlayer,
   Loader,
   Error,
@@ -31,5 +32,6 @@ export {
   ProfileUser,
   TopChartsCard,
   UserPlaylist,
-  CreatePlaylist
+  CreatePlaylist,
+  UserSongEdit,
 };

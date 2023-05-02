@@ -20,6 +20,7 @@ import {
   UserCreatePlaylist,
   Search,
   Favorites,
+  SongEdit,
 } from "../pages";
 import Playlist from "../pages/Playlist";
 
@@ -50,6 +51,7 @@ const User = () => {
               <Route path="/playlist/:id" element={<Playlist/>} />
               <Route path="search/:term" element={<Search/>} />
               <Route path="/add-songs" element={<AddSongs/>} />
+              <Route path="/edit-songs/:id" element={<SongEdit/>}  />
               <Route path="/favorites" element={<Favorites/>} />
               <Route path="/logout" element={<Logout />} />
             </Routes>

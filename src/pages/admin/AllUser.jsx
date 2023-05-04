@@ -11,7 +11,7 @@ function AllUser() {
   useEffect(() => {
     const userFinder = async () => {
       await axios({
-        method: "POST",
+        method: "GET",
         url: "/userFinder",
       }).then((res) => {
         setData(res.data.data);
@@ -80,7 +80,7 @@ function AllUser() {
                   }}
                   className=" h-full rounded-lg border-t  sm:border-r-0 border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500"
                 >
-                  <option className="" value={"All"}>All</option>
+                  <option value={"All"}>All</option>
                   <option value={"user"}>User</option>
                   <option value={"pending"}>Pending</option>
                   <option value={"artist"}>Artist</option>

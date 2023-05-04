@@ -54,6 +54,8 @@ const User = () => {
               <Route path="/edit-songs/:id" element={<SongEdit/>}  />
               <Route path="/favorites" element={<Favorites/>} />
               <Route path="/logout" element={<Logout />} />
+
+              <Route path="/*" element={<div>page not found</div>} />
             </Routes>
           </div>
 

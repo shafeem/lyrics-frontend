@@ -1,11 +1,11 @@
 import { HiOutlineUserGroup } from "react-icons/hi";
 import { FiLogIn, FiLogOut } from "react-icons/fi";
-import { AiOutlineHome, AiOutlineBarChart } from "react-icons/Ai";
+import { AiOutlineHome, AiOutlineBarChart } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
 import { BsMusicNote } from "react-icons/bs";
 import { MdPlaylistAdd } from "react-icons/md";
 import { IoMdAddCircleOutline } from "react-icons/io";
-import { AiOutlineHeart } from "react-icons/Ai";
+import { AiOutlineHeart } from "react-icons/ai";
 
 export const genres = [
   { title: "Pop", value: "POP" },

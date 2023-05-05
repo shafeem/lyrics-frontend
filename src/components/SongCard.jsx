@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import PlayPause from "./PlayPause";
 import { playPause, setActiveSong } from "../redux/features/playerSlice";
-import { AiFillHeart, AiOutlineHeart } from "react-icons/Ai";
+import {BsFillHeartFill,BsHeart} from 'react-icons/bs'
 import axios from "../axios/userInstance";
 import { MdPlaylistAdd } from "react-icons/md";
 import { message } from "antd";
@@ -148,9 +148,9 @@ const SongCard = ({ song, i, isPlaying, activeSong, data, refreshInvoker }) => {
               }}
             >
               {likedSongs?.includes(song._id) ? (
-                <AiFillHeart className="w-6 h-6" />
+                <BsFillHeartFill className="w-6 h-6" />
               ) : (
-                <AiOutlineHeart className="w-6 h-6" />
+                <BsHeart className="w-6 h-6" />
               )}
             </button>
           </div>

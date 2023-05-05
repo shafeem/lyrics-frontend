@@ -8,14 +8,7 @@ import axios from "../axios/userInstance";
 import { MdPlaylistAdd } from "react-icons/md";
 import { message } from "antd";
 
-const SongCard = ({
-  song,
-  i,
-  isPlaying,
-  activeSong,
-  data,
-  refreshInvoker,
-}) => {
+const SongCard = ({ song, i, isPlaying, activeSong, data, refreshInvoker }) => {
   const [likedSongs, setLikedSongs] = useState();
   const [tabOpener, setTapOpener] = useState(false);
   const [playData, setPlayData] = useState();
@@ -23,12 +16,15 @@ const SongCard = ({
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { userId } = useSelector((state) => state.userSlice);
+  const { userId, token } = useSelector((state) => state.userSlice);
 
   useEffect(() => {
     axios({
       url: "/likedSongFinder",
       method: "POST",
+      headers: {
+        Authorization: `${token}`,
+      },
       data: {
         userId,
       },
@@ -41,6 +37,9 @@ const SongCard = ({
     axios({
       method: "POST",
       url: "/getPlaylists",
+      headers: {
+        Authorization: `${token}`,
+      },
       data: {
         userId,
       },
@@ -53,6 +52,9 @@ const SongCard = ({
     await axios({
       url: "/addSongToPlaylist",
       method: "POST",
+      headers: {
+        Authorization: `${token}`,
+      },
       data: {
         songId: songId,
         playId: id,
@@ -82,14 +84,17 @@ const SongCard = ({
     await axios({
       url: "/handleLikeSongs",
       method: "POST",
+      headers: {
+        Authorization: `${token}`,
+      },
       data: {
         songId: id,
         userId,
       },
     }).then((res) => {
       setLikedSongs(res.data.user.likedSongs);
-      if(refreshInvoker){
-        refreshInvoker()
+      if (refreshInvoker) {
+        refreshInvoker();
       }
     });
   };

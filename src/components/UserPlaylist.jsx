@@ -24,12 +24,15 @@ function UserPlaylist() {
   const dispatch = useDispatch();
 
   const { activeSong, isPlaying } = useSelector((state) => state.player);
-  const { userId } = useSelector((state) => state.userSlice);
+  const { userId,token } = useSelector((state) => state.userSlice);
 
   useEffect(() => {
     axios({
       url: "/songFinder",
       method: "GET",
+      headers:{
+        "Authorization": `${token}`
+      },
     }).then((res) => {
       console.log(res, "the response here ");
       setData(res.data.tracks);
@@ -48,6 +51,9 @@ function UserPlaylist() {
     e.preventDefault();
     await axios({
       url: "/playlistSubmitter",
+      headers:{
+        "Authorization": `${token}`
+      },
       method: "POST",
       data: {
         playlistImg: playlistImg,

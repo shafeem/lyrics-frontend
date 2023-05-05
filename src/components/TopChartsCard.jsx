@@ -15,13 +15,16 @@ const TopChartsCard = ({
   const [button, setButton] = useState(false);
   const [addSongs, setAddSongs] = useState();
 
-  const { userId } = useSelector((state) => state.userSlice);
+  const { userId,token } = useSelector((state) => state.userSlice);
 
   const addPlaylistSong = async (songid) => {
     console.log(songid, "the id of the songs");
     await axios({
       url: "/addPlaylistSong",
       method: "POST",
+      headers:{
+        "Authorization": `${token}`
+      },
       data: {
         playlistId: playlistId,
         songId: songid,
@@ -35,6 +38,9 @@ const TopChartsCard = ({
     await axios({
       url: "/deletePlaylistSongs",
       method: "POST",
+      headers:{
+        "Authorization": `${token}`
+      }, 
       data: {
         playlistId: playlistId,
         songId: songid,

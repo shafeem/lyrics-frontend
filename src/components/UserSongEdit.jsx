@@ -22,13 +22,16 @@ function UserSongEdit() {
 
   const navigate = useNavigate()
 
-  const { userId } = useSelector((state) => state.userSlice);
+  const { userId,token } = useSelector((state) => state.userSlice);
   const { id } = useParams();
 
   useEffect(() => {
     axios({
       url: "/songDetails",
       method: "POST",
+      headers:{
+        "Authorization": `${token}`
+      },
       data: {
         id,
       },
@@ -48,6 +51,9 @@ function UserSongEdit() {
     e.preventDefault();
     await axios({
       url: "/songEditer",
+      headers:{
+        "Authorization": `${token}`
+      },
       method: "POST",
       data: {
         songName,

@@ -11,10 +11,15 @@ function FavoriteSongs() {
   const [songData, setSongData] = useState();
   const [refresh, setRefresh] = useState(false);
 
+  const {token} = useSelector((state)=>state.userSlice)
+
   useEffect(() => {
     axios({
       url: "/favoriteSongs",
       method: "POST",
+      headers:{
+        "Authorization": `${token}`
+      },
       data: {
         userId,
       },

@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 function AdminSongs() {
   const { activeSong, isPlaying } = useSelector((state) => state.player);
+  const {token} = useSelector((state)=>state.adminSlice)
+
 
   // console.log(isPlaying,'the console of isPlaying');
   // console.log(activeSong,'the console of activeSong');
@@ -16,6 +18,9 @@ function AdminSongs() {
       await axios({
         url: "/songFinder",
         method: "GET",
+        headers:{
+          "Authorization": `${token}`
+        },
       }).then((res) => {
         console.log(res,'the response');
         setSongData(res.data)

@@ -24,10 +24,15 @@ function CreatePlaylist() {
 
   const dispatch = useDispatch();
 
+  const {token} = useSelector((state)=>state.userSlice)
+
   useEffect(() => {
     axios({
       method: "POST",
       url: "/getPlaylists",
+      headers:{
+        "Authorization": `${token}`
+      },
       data: {
         userId,
       },
@@ -35,7 +40,7 @@ function CreatePlaylist() {
       console.log(res, "res");
       setData(res?.data?.data);
     });
-  }, [mapData]);
+  }, [mapData,reloader]);
 
   // const handlePlay = (song, i) => {
   //   dispatch(setActiveSong({ song, data, i }));
@@ -49,6 +54,9 @@ function CreatePlaylist() {
     await axios({
       method: "post",
       url: "/createPlaylist",
+      headers:{
+        "Authorization": `${token}`
+      },
       data: {
         userId: userId,
       },
@@ -79,6 +87,9 @@ function CreatePlaylist() {
     await axios({
       url: "/deletePlaylistSongs",
       method: "POST",
+      headers:{
+        "Authorization": `${token}`
+      },
       data: {
         playlistId: playlistId,
         songId: id,
@@ -86,7 +97,7 @@ function CreatePlaylist() {
     }).then((res) => {
       console.log(res.data);
       setMapData(res.data.updatedPlaylist);
-      setReloader(true);
+      setReloader(!reloader);
     });
   };
 
@@ -96,6 +107,9 @@ function CreatePlaylist() {
     await axios({
       url: "/deletePlaylist",
       method: "POST",
+      headers:{
+        "Authorization": `${token}`
+      },
       data: {
         playlistId: id,
         userId: userId,

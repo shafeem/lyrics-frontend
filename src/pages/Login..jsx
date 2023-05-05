@@ -4,7 +4,7 @@ import { LoginSocialGoogle } from "reactjs-social-login";
 import { Navigate, useNavigate } from "react-router-dom";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import  {Auth}  from "../firebase/firebase";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setLogin } from "../redux/features/userSlice";
 
 function Login() {
@@ -18,6 +18,9 @@ function Login() {
   const [Res, setRes] = useState(null);
   const [Verify, setVerify] = useState(false);
 
+  const {token} = useSelector((state)=>state.userSlice)
+
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -29,6 +32,9 @@ function Login() {
     await axios({
       url: "/googleAuth",
       method: "post",
+      headers:{
+        "Authorization": `${token}`
+      },
       data: {
         datas,
       },
@@ -109,6 +115,9 @@ function Login() {
     await axios({
       url: "/verifynumber",
       method: "POST",
+      headers:{
+        "Authorization": `${token}`
+      },
       data: {
         number: number,
       },

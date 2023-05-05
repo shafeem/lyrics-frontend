@@ -17,12 +17,15 @@ function AddSongs() {
   const [imgSetter, setImgSetter] = useState(false);
   const [audioSetter, setAudioSetter] = useState(false);
 
-  const { userId } = useSelector((state) => state.userSlice);
+  const { userId,token } = useSelector((state) => state.userSlice);
 
   const songUploader = async (e) => {
     await axios({
       url: "/songSubmitter",
       method: "POST",
+      headers:{
+        "Authorization": `${token}`
+      },
       data: {
         songName,
         artistName,

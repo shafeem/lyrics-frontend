@@ -14,6 +14,8 @@ const Discover = () => {
   const [data, setData] = useState();
   const [songData,setSongData] = useState();
   const [songGenre, setSongGenre] = useState("POP");
+  const {token} = useSelector((state)=>state.userSlice)
+
 
   var genreTitle;
 
@@ -22,6 +24,9 @@ const Discover = () => {
   useEffect(() => {
     axios({
       url: "/songFinder",
+      headers:{
+        "Authorization": `${token}`
+      },
       method: "GET",
     }).then((res) => {
       console.log(res.data, "the res.data here");

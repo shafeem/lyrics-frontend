@@ -3,7 +3,7 @@ import axios from "../../axios/adminInstance";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Navigate, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setLogin } from "../../redux/features/adminSlice";
 import back from "../../assets/img/back.jpg";
 import backg from "../../assets/img/backg.jpeg";
@@ -11,6 +11,8 @@ import backg from "../../assets/img/backg.jpeg";
 const AdminLog = () => {
   const [Email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const {token} = useSelector((state)=>state.adminSlice)
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -25,8 +27,21 @@ const AdminLog = () => {
   const verifyChecker = async (e) => {
     e.preventDefault();
 
-    await axios
-      .post(`/adminVerify?Email=${Email}&password=${password}`)
+    // await axios
+    //   .post(`?Email=${Email}&password=${password}`)
+
+      await axios({
+        url:"/adminVerify",
+        method:"POST",
+        headers:{
+          "Authorization": `${token}`
+        },
+        data:{
+          Email:Email,
+          password:password
+        }
+      })
+      
       .then((response) => {
         const data = response.data.message;
 

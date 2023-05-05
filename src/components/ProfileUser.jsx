@@ -12,7 +12,7 @@ import { message } from "antd";
 import { useNavigate } from "react-router-dom";
 
 function ProfileUser() {
-  const { userId } = useSelector((state) => state.userSlice);
+  const { userId ,token} = useSelector((state) => state.userSlice);
   console.log(userId, "the userid");
 
   const [name, setName] = useState();
@@ -45,6 +45,9 @@ function ProfileUser() {
       await axios({
         url: "/dataCollector",
         method: "POST",
+        headers:{
+          "Authorization": `${token}`
+        },
         data: {
           userId: userId,
         },
@@ -102,6 +105,9 @@ function ProfileUser() {
 
     await axios({
       url: "/profileSubmit",
+      headers:{
+        "Authorization": `${token}`
+      },
       method: "POST",
       data: {
         name: name,
@@ -134,6 +140,9 @@ function ProfileUser() {
     await axios({
       url: "/deleteSongs",
       method: "POST",
+      headers:{
+        "Authorization": `${token}`
+      },
       data: {
         songId: id,
         userId: userId,

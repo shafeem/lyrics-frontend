@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 const ArtistDetails = () => {
   const { id: artistId } = useParams();
   const { activeSong, isPlaying } = useSelector((state) => state.player);
+  const {token} = useSelector((state)=>state.userSlice)
 
   const [data,setData] = useState();
   const [artist,setArtist] = useState();
@@ -26,6 +27,9 @@ const ArtistDetails = () => {
     axios({
       url:"/findArtistSongs",
       method:"POST",
+      headers:{
+        "Authorization": `${token}`
+      },
       data:{
         artistId
       }

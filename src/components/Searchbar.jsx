@@ -47,6 +47,9 @@ const Searchbar = () => {
       await axios({
         url: "/searchFinder",
         method: "POST",
+        headers:{
+          "Authorization": `${token}`
+        },
         data: {
           term,
         },

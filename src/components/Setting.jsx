@@ -7,7 +7,7 @@ import { setLogin } from "../redux/features/userSlice";
 // import { response } from "express";
 
 function Setting() {
-  const { userType, userId, profile } = useSelector((state) => state.userSlice);
+  const { userType, userId, profile,token } = useSelector((state) => state.userSlice);
   const state = useSelector((state) => state.userSlice);
 
   const dispatch = useDispatch();
@@ -31,6 +31,9 @@ function Setting() {
     await axios({
       url: "/rolechanger",
       method: "POST",
+      headers:{
+        "Authorization": `${token}`
+      },
       data: {
         id: userId,
       },

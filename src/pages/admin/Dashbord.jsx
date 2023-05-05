@@ -3,6 +3,7 @@ import { BsFillFileMusicFill } from "react-icons/bs";
 import { TiUserAdd } from "react-icons/ti";
 import { RiUser3Fill } from "react-icons/ri";
 import axios from "../../axios/adminInstance";
+import { useSelector } from "react-redux";
 
 function Dashbord() {
   const [userDetails, setUserDetails] = useState();
@@ -12,10 +13,16 @@ function Dashbord() {
   const [artist, setArtist] = useState();
   const [song, setSong] = useState();
 
+  const {token} = useSelector((state)=>state.adminInstance)
+
+
   useEffect(() => {
     axios({
       url: "/findingUsers",
       method: "GET",
+      headers:{
+        "Authorization": `${token}`
+      },
     }).then((res) => {
       setUserDetails(res?.data?.userDetails);
     });
@@ -25,6 +32,9 @@ function Dashbord() {
     axios({
       url: "/songFinder",
       method: "GET",
+      headers:{
+        "Authorization": `${token}`
+      },
     }).then((res) => {
       setSongDetails(res?.data?.tracks);
     });
@@ -34,6 +44,9 @@ function Dashbord() {
     axios({
       url: "/findArtist",
       method: "GET",
+      headers:{
+        "Authorization": `${token}`
+      },
     }).then((res) => {
       setArtistDetails(res?.data?.artistDetails);
     });

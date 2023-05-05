@@ -22,6 +22,10 @@ import {
   Favorites,
   SongEdit,
 } from "../pages";
+
+// import { UserPublicRoute } from "../Utils/UserPublicRoutes";
+import UserProtectedRoute from "../Utils/UserProtectedRoutes";
+
 import Playlist from "../pages/Playlist";
 
 const User = () => {
@@ -41,20 +45,25 @@ const User = () => {
           <div className="flex-1 h-fit pb-40">
             <Routes>
               <Route path="/" element={<Discover />} />
-              <Route path="/top-artists" element={<TopArtists />} />
-              <Route path="/top-charts" element={<TopCharts />} />
-              <Route path="/around-you" element={<AroundYou />} />
-              <Route path="/artists/:id" element={<ArtistDetails />} />
-              <Route path="/songs/:songid" element={<SongDetails />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/createPlaylist" element={<UserCreatePlaylist />} />
-              <Route path="/playlist/:id" element={<Playlist/>} />
-              <Route path="search/:term" element={<Search/>} />
-              <Route path="/add-songs" element={<AddSongs/>} />
-              <Route path="/edit-songs/:id" element={<SongEdit/>}  />
-              <Route path="/favorites" element={<Favorites/>} />
-              <Route path="/logout" element={<Logout />} />
+              <Route element={<UserProtectedRoute />}>
+                <Route path="/top-artists" element={<TopArtists />} />
+                <Route path="/top-charts" element={<TopCharts />} />
+                <Route path="/around-you" element={<AroundYou />} />
+                <Route path="/songs/:songid" element={<SongDetails />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route
+                  path="/createPlaylist"
+                  element={<UserCreatePlaylist />}
+                />
+                <Route path="/playlist/:id" element={<Playlist />} />
+                <Route path="/add-songs" element={<AddSongs />} />
+                <Route path="/edit-songs/:id" element={<SongEdit />} />
+                <Route path="/logout" element={<Logout />} />
+              </Route>
 
+              <Route path="/artists/:id" element={<ArtistDetails />} />
+              <Route path="search/:term" element={<Search />} />
+              <Route path="/favorites" element={<Favorites />} />
               <Route path="/*" element={<div>page not found</div>} />
             </Routes>
           </div>

@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "../../axios/adminInstance";
+import { useSelector } from "react-redux";
 
 function AllUser() {
   const [data, setData] = useState([]);
   const [role, setRole] = useState("All");
   const [change, setChange] = useState();
+
+  const {token} = useSelector((state)=>state.adminInstance)
+
 
   console.log(role, "the role");
 
@@ -13,6 +17,9 @@ function AllUser() {
       await axios({
         method: "GET",
         url: "/userFinder",
+        headers:{
+          "Authorization": `${token}`
+        },
       }).then((res) => {
         setData(res.data.data);
         setChange(res.data.data);
@@ -53,6 +60,9 @@ function AllUser() {
     await axios({
       method: "POST",
       url: "/artistApprover",
+      headers:{
+        "Authorization": `${token}`
+      },
       data: {
         data,
       },

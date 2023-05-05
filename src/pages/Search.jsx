@@ -9,12 +9,17 @@ const Search = () => {
   const [songData,setSongData] = useState()
   const { term } = useParams();
   const { activeSong, isPlaying } = useSelector((state) => state.player);
+  const {token} = useSelector((state)=>state.userSlice)
+
   // const { data, isFetching, error } = useGetSpecificSongsQuery(term);
 
   useEffect(()=>{
     axios({
       url:"/searchFinder",
       method:"POST",
+      headers:{
+        "Authorization": `${token}`
+      },
       data:{
         term
       }

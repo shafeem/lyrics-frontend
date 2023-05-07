@@ -10,9 +10,11 @@ import { IoCloseSharp } from "react-icons/io5";
 import { MdOutlineModeEditOutline } from "react-icons/md";
 import { message } from "antd";
 import { useNavigate } from "react-router-dom";
+import { setLogin } from "../redux/features/userSlice";
 
 function ProfileUser() {
-  const { userId ,token} = useSelector((state) => state.userSlice);
+  const { userId, token } = useSelector((state) => state.userSlice);
+  const state = useSelector((state) => state.userSlice);
   console.log(userId, "the userid");
 
   const [name, setName] = useState();
@@ -45,8 +47,8 @@ function ProfileUser() {
       await axios({
         url: "/dataCollector",
         method: "POST",
-        headers:{
-          "Authorization": `${token}`
+        headers: {
+          Authorization: `${token}`,
         },
         data: {
           userId: userId,
@@ -105,8 +107,8 @@ function ProfileUser() {
 
     await axios({
       url: "/profileSubmit",
-      headers:{
-        "Authorization": `${token}`
+      headers: {
+        Authorization: `${token}`,
       },
       method: "POST",
       data: {
@@ -124,6 +126,12 @@ function ProfileUser() {
 
       if (response.data.message === "success") {
         message.success("Profile Updated Successfully");
+        dispatch(
+          setLogin({
+            ...state,
+            profile: true,
+          })
+        );
       } else {
         message.error("Profile Updated Failed");
       }
@@ -140,8 +148,8 @@ function ProfileUser() {
     await axios({
       url: "/deleteSongs",
       method: "POST",
-      headers:{
-        "Authorization": `${token}`
+      headers: {
+        Authorization: `${token}`,
       },
       data: {
         songId: id,

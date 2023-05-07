@@ -28,6 +28,7 @@ function ProfileUser() {
   const [data, setData] = useState();
 
   const [songData, setSongData] = useState();
+  const [artistSongCount, setArtistSongCount] = useState();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -60,17 +61,33 @@ function ProfileUser() {
         setSongData(res.data);
         setData(res.data.tracks);
 
-        setName(dt.name);
-        setEmail(dt.email);
-        setDob(dt.dob);
-        setMobile(dt.number);
-        setLocation(dt.location);
-        setLanguate(dt.language);
-        setImgUrl(dt.imgUrl);
+        setName(dt?.name);
+        setEmail(dt?.email);
+        setDob(dt?.dob);
+        setMobile(dt?.number);
+        setLocation(dt?.location);
+        setLanguate(dt?.language);
+        setImgUrl(dt?.imgUrl);
       });
     };
     dataCollector();
   }, []);
+
+  useEffect(() => {
+    axios({
+      url: "/findArtistSongs",
+      method: "POST",
+      headers: {
+        Authorization: `${token}`,
+      },
+      data: {
+        artistId: userId,
+      },
+    }).then((res) => {
+      console.log("the response in here", res);
+      setArtistSongCount(res?.data?.tracks?.length);
+    });
+  });
 
   const handleImgUploader = (e) => {
     setImg(e.target.files[0]);
@@ -347,8 +364,9 @@ function ProfileUser() {
         </div>
       </form>
 
-      <h2 className="text-xl text-white text-center pt-5">Your Songs</h2>
-
+      {artistSongCount != 0 && (
+        <h2 className="text-xl text-white text-center pt-5">Your Songs</h2>
+      )}
       <div className="flex flex-wrap sm:justify-start justify-center gap-8">
         {songData?.tracks?.map((song, i) => (
           <div className="pt-5">

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "../../axios/adminInstance";
 import { useSelector } from "react-redux";
 
@@ -7,18 +7,18 @@ function AllUser() {
   const [role, setRole] = useState("All");
   const [change, setChange] = useState();
 
-  const {token} = useSelector((state)=>state.adminInstance)
+  const { token } = useSelector((state) => state.adminSlice);
+  const initialData = useRef([]);
 
-
-  console.log(role, "the role");
+  console.log(role, "the role", change, "the change");
 
   useEffect(() => {
     const userFinder = async () => {
       await axios({
         method: "GET",
         url: "/userFinder",
-        headers:{
-          "Authorization": `${token}`
+        headers: {
+          Authorization: `${token}`,
         },
       }).then((res) => {
         setData(res.data.data);
@@ -31,8 +31,11 @@ function AllUser() {
   }, []);
 
   useEffect(() => {
-    roleFinder();
-  }, [role]);
+    if (initialData.current !== data) {
+      initialData.current = data;
+      roleFinder();
+    }
+  }, [data, role]);
 
   const roleFinder = async () => {
     let filteredUsers;
@@ -56,18 +59,20 @@ function AllUser() {
     setChange(filteredUsers);
   };
 
-  const approver = async () => {
+  const approver = async (id) => {
+    console.log("the id ", id);
     await axios({
       method: "POST",
       url: "/artistApprover",
-      headers:{
-        "Authorization": `${token}`
+      headers: {
+        Authorization: `${token}`,
       },
       data: {
-        data,
+        id,
       },
     }).then((res) => {
       console.log(res, "the response here");
+      setChange(res?.data?.data);
     });
   };
 
@@ -133,7 +138,7 @@ function AllUser() {
                 </thead>
                 <tbody>
                   {change?.map((data) => (
-                    <tr>
+                    <tr key={data?._id}>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <div className="flex items-center">
                           <div className="flex-shrink-0 w-10 h-10">
@@ -174,7 +179,7 @@ function AllUser() {
                           <button
                             className="bg-blue-500 rounded-full h-7 w-20"
                             onClick={() => {
-                              approver();
+                              approver(data?._id);
                             }}
                           >
                             Approve

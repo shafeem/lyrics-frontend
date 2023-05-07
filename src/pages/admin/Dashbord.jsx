@@ -13,7 +13,7 @@ function Dashbord() {
   const [artist, setArtist] = useState();
   const [song, setSong] = useState();
 
-  const {token} = useSelector((state)=>state.adminInstance)
+  const {token} = useSelector((state)=>state.adminSlice)
 
 
   useEffect(() => {

@@ -5,7 +5,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setLogin } from "../../redux/features/adminSlice";
-import back from "../../assets/img/back.jpg";
 import backg from "../../assets/img/backg.jpeg";
 
 const AdminLog = () => {
@@ -25,6 +24,9 @@ const AdminLog = () => {
   };
 
   const verifyChecker = async (e) => {
+    console.log(
+      'the console',Email
+    );
     e.preventDefault();
 
     // await axios
@@ -33,9 +35,9 @@ const AdminLog = () => {
       await axios({
         url:"/adminVerify",
         method:"POST",
-        headers:{
-          "Authorization": `${token}`
-        },
+        // headers:{
+        //   "Authorization": `${token}`
+        // },
         data:{
           Email:Email,
           password:password

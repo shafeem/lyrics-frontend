@@ -24,7 +24,8 @@ function Dashbord() {
         "Authorization": `${token}`
       },
     }).then((res) => {
-      setUserDetails(res?.data?.userDetails);
+      console.log(res,'the response');
+      setUserDetails(res?.data?.user);
     });
   }, []);
 

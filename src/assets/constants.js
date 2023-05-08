@@ -45,7 +45,7 @@ export const Loginlinks = [
   { name: "Discover", to: "/", icon: AiOutlineHome },
   // { name: "Top Artists", to: "/top-artists", icon: HiOutlineUserGroup },
   // { name: "Top Charts", to: "/top-charts", icon: AiOutlineBarChart },
-    { name: "Favorites", to: "/favorites", icon: AiOutlineHeart },
+    // { name: "Favorites", to: "/favorites", icon: AiOutlineHeart },
   { name: "Login", to: "/login", icon: FiLogIn },
 ];
 

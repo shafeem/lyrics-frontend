@@ -8,7 +8,15 @@ import axios from "../axios/userInstance";
 import { MdPlaylistAdd } from "react-icons/md";
 import { message } from "antd";
 
-const SongCard = ({ song, i, isPlaying, activeSong, data, refreshInvoker }) => {
+const SongCard = ({
+  song,
+  i,
+  isPlaying,
+  activeSong,
+  data,
+  refreshInvoker,
+  likeShow,
+}) => {
   const [likedSongs, setLikedSongs] = useState();
   const [tabOpener, setTapOpener] = useState(false);
   const [playData, setPlayData] = useState();
@@ -17,6 +25,8 @@ const SongCard = ({ song, i, isPlaying, activeSong, data, refreshInvoker }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { userId, token } = useSelector((state) => state.userSlice);
+
+  const { admin } = useSelector((state) => state.adminSlice);
 
   useEffect(() => {
     axios({
@@ -136,26 +146,27 @@ const SongCard = ({ song, i, isPlaying, activeSong, data, refreshInvoker }) => {
           <p className="text-sm truncate text-gray-300 mt-1">
             <Link to={`/artists/${song.artists}`}>{song?.subtitle}</Link>
           </p>
-          {token && (
-            <div className="flex flex-row-reverse " key={song._id}>
-              <button onClick={() => moreFuntion(song._id)}>
-                <MdPlaylistAdd className="w-6 h-6 text-white/70 hover:cursor-pointer" />
-              </button>
+          {token &&
+            (likeShow ? null : (
+              <div className="flex flex-row-reverse " key={song._id}>
+                <button onClick={() => moreFuntion(song._id)}>
+                  <MdPlaylistAdd className="w-6 h-6 text-white/70 hover:cursor-pointer" />
+                </button>
 
-              <button
-                className="text-red-700"
-                onClick={() => {
-                  handleLikeSongs(song._id);
-                }}
-              >
-                {likedSongs?.includes(song._id) ? (
-                  <BsFillHeartFill className="w-6 h-6" />
-                ) : (
-                  <BsHeart className="w-6 h-6" />
-                )}
-              </button>
-            </div>
-          )}
+                <button
+                  className="text-red-700"
+                  onClick={() => {
+                    handleLikeSongs(song._id);
+                  }}
+                >
+                  {likedSongs?.includes(song._id) ? (
+                    <BsFillHeartFill className="w-6 h-6" />
+                  ) : (
+                    <BsHeart className="w-6 h-6" />
+                  )}
+                </button>
+              </div>
+            ))}
         </div>
       </div>
       <div className={`${tabOpener ? "active" : "hidden"} `}>

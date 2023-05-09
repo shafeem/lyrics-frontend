@@ -54,7 +54,7 @@ export const LogoutLinks = [
   // { name: "Top Artists", to: "/top-artists", icon: HiOutlineUserGroup },
   // { name: "Top Charts", to: "/top-charts", icon: AiOutlineBarChart },
   { name: "Profile", to: "/profile", icon: CgProfile },
-  { name: "PlayList", to: "/playlist", icon: MdPlaylistAdd },
+  { name: "PlayList", to: "/createPlaylist", icon: MdPlaylistAdd },
   { name: "Favorites", to: "/favorites", icon: AiOutlineHeart },
   { name: "Logout", to: "/logout", icon: FiLogOut },
 ];

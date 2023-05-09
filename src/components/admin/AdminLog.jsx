@@ -13,6 +13,7 @@ const AdminLog = () => {
 
   const {token} = useSelector((state)=>state.adminSlice)
 
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -75,6 +76,7 @@ const AdminLog = () => {
           dispatch(
             setLogin({
               token: response.data.token,
+              admin: true,
             })
           );
           navigate("/admin/dashbord");

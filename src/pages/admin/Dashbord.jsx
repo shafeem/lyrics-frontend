@@ -86,6 +86,7 @@ function Dashbord() {
             <div className="">
               <RiUser3Fill
                 size={70}
+                
                 className="text-blue-900 flex items-center justify-center"
               />
             </div>

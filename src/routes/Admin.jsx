@@ -9,7 +9,8 @@ import {
 } from "../components/admin";
 import { Dashbord, AllUser, Songs } from "../pages/admin/";
 import { MusicPlayer } from "../components";
-import { ErrorPage } from "../pages/ErrorPage";
+import ErrorPage from '../pages/ErrorPage'
+
 
 const User = () => {
   const { activeSong } = useSelector((state) => state.player);

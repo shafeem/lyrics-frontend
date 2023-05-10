@@ -10,7 +10,6 @@ import AddSongs from './AddSongs';
 import UserCreatePlaylist from './UserCreatePlaylist';
 import Favorites from './Favorites'
 import SongEdit from './SongEdit';
-// import ErrorPage from './ErrorPage'
 
 export {
   Discover,
@@ -25,5 +24,4 @@ export {
   UserCreatePlaylist,
   Favorites,
   SongEdit,
-  ErrorPage,
 };

@@ -67,6 +67,7 @@ const User = () => {
                 <Route path="/artists/:id" element={<ArtistDetails />} />
                 <Route path="/search/:term" element={<Search />} />
                 <Route path="/favorites" element={<Favorites />} />
+                <Route path="/*" element={<ErrorPage />} />
               </Routes>
             </div>
 

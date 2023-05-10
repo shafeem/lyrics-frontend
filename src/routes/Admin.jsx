@@ -9,6 +9,7 @@ import {
 } from "../components/admin";
 import { Dashbord,AllUser,Songs } from "../pages/admin/";
 import {MusicPlayer} from '../components'
+import { ErrorPage } from "../pages";
 
 const User = () => {
   const { activeSong } = useSelector((state) => state.player);
@@ -26,6 +27,7 @@ const User = () => {
               <Route path="/logout" element={<AdminOut />} />
               <Route path="/users" element={<AllUser/>} />
               <Route path="/songs" element={<Songs/>} />
+              <Route path="/*" element={<ErrorPage/>} />
             </Routes>
           </div>
           <div className="xl:sticky relative top-0 h-fit">

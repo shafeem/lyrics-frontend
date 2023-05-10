@@ -5,8 +5,7 @@ import User from "./routes/User";
 import Admin from "./routes/Admin";
 import Login from "./pages/Login.";
 import AdminLogin from "./pages/admin/AdminLogin";
-import { ErrorPage } from "./pages";
-
+// import { ErrorPage } from "./pages";
 // import firebase from './firebase/firebase'
 
 function App() {
@@ -18,7 +17,6 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/admin/" element={<AdminLogin />} />
           <Route path="/admin/*" element={<Admin />} />
-
         </Routes>
       </BrowserRouter>
     </>

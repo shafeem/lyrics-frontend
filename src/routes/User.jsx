@@ -21,8 +21,10 @@ import {
   Search,
   Favorites,
   SongEdit,
-  ErrorPage,
+  // ErrorPage,
 } from "../pages";
+
+import ErrorPage from "../pages/ErrorPage";
 
 // import { UserPublicRoute } from "../Utils/UserPublicRoutes";
 import UserProtectedRoute from "../Utils/UserProtectedRoutes";
@@ -63,7 +65,6 @@ const User = () => {
                   <Route path="/edit-songs/:id" element={<SongEdit />} />
                   <Route path="/logout" element={<Logout />} />
                 </Route>
-
                 <Route path="/artists/:id" element={<ArtistDetails />} />
                 <Route path="/search/:term" element={<Search />} />
                 <Route path="/favorites" element={<Favorites />} />

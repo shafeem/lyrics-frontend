@@ -7,9 +7,9 @@ import {
   AdminSearchBar,
   AdminSideBar,
 } from "../components/admin";
-import { Dashbord,AllUser,Songs } from "../pages/admin/";
-import {MusicPlayer} from '../components'
-import { ErrorPage } from "../pages";
+import { Dashbord, AllUser, Songs } from "../pages/admin/";
+import { MusicPlayer } from "../components";
+import { ErrorPage } from "../pages/ErrorPage";
 
 const User = () => {
   const { activeSong } = useSelector((state) => state.player);
@@ -25,9 +25,9 @@ const User = () => {
             <Routes>
               <Route path="/dashbord" element={<Dashbord />} />
               <Route path="/logout" element={<AdminOut />} />
-              <Route path="/users" element={<AllUser/>} />
-              <Route path="/songs" element={<Songs/>} />
-              <Route path="/*" element={<ErrorPage/>} />
+              <Route path="/users" element={<AllUser />} />
+              <Route path="/songs" element={<Songs />} />
+              <Route path="/*" element={<ErrorPage />} />
             </Routes>
           </div>
           <div className="xl:sticky relative top-0 h-fit">
